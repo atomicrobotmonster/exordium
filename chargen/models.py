@@ -1,13 +1,16 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
-class User(models.Model):
+class UserProfile(models.Model):
     '''Uses this character generator; has characters'''
+    user = models.OneToOneField(User)
     name = models.CharField(max_length=200)
 
     def __unicode__(self):
         return self.name
+
 
 def validate_attribute(value):
     '''Validator for attribute value range'''
@@ -17,7 +20,7 @@ def validate_attribute(value):
 class Character(models.Model):
     '''Barbarians of Lemuria Character'''
     name = models.CharField(max_length=200)
-    user = models.ForeignKey(User)
+    userProfile = models.ForeignKey(UserProfile)
     unassigned_attribute_points = models.PositiveIntegerField(default=4)
     strength = models.IntegerField(validators=[validate_attribute], default=0)
     agility = models.IntegerField(validators=[validate_attribute], default=0)

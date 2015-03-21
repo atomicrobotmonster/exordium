@@ -6,6 +6,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'exordium.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', include('chargen.urls')),
+    url(r'', include('chargen.urls', namespace="chargen")),
     url(r'^admin/', include(admin.site.urls)),
 )

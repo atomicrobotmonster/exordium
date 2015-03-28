@@ -4,7 +4,8 @@ from rest_framework.views import APIView
 from django.http import Http404
 from rest_framework.response import Response
 from models import UserProfile, Character
-from serializers import UserProfileSerializer, CharacterSummarySerializer
+from serializers import UserProfileSerializer, CharacterSummarySerializer, CharacterSerializer
+from rest_framework import generics
 
 def get_user_profile(user_profile_id):
     try:
@@ -27,3 +28,7 @@ class CharacterListView(APIView):
         user_profile = get_user_profile(user_profile_id)
         serializer = CharacterSummarySerializer(user_profile.character_set, many=True)
         return Response(serializer.data)
+
+class CharacterDetailView(generics.RetrieveAPIView):
+    queryset = Character.objects.all()
+    serializer_class = CharacterSerializer

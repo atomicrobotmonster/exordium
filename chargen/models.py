@@ -20,7 +20,7 @@ def validate_attribute(value):
 class Character(models.Model):
     '''Barbarians of Lemuria Character'''
     name = models.CharField(max_length=200)
-    user_profile = models.ForeignKey(UserProfile)
+    user_profile = models.ForeignKey(UserProfile, related_name='characters')
     unassigned_attribute_points = models.PositiveIntegerField(default=4)
     strength = models.IntegerField(validators=[validate_attribute], default=0)
     agility = models.IntegerField(validators=[validate_attribute], default=0)

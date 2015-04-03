@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, status
@@ -40,7 +40,7 @@ def get_user_profile(user_profile_id):
 class UserProfileDetailView(APIView):
     """Custom view for retrieving user details"""
    
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, user_profile_id):
         user_profile = get_user_profile(user_profile_id)
@@ -48,11 +48,11 @@ class UserProfileDetailView(APIView):
         return Response(serializer.data)
 
 class CharacterListView(APIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, user_profile_id):
         user_profile = get_user_profile(user_profile_id)
-        serializer = CharacterSummarySerializer(user_profile.character_set, many=True)
+        serializer = CharacterSummarySerializer(user_profile.characters, many=True)
         return Response(serializer.data)
 
 class CharacterDetailView(generics.RetrieveAPIView):

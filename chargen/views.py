@@ -25,8 +25,10 @@ class UserProfileCreateView(APIView):
         
 
 def get_user_profile(user_profile_id):
-    """Utility function for retrieving a user profile or raising an HTTP 404"""
-   
+    """Utility function for retrieving a user profile or raising an HTTP 404.
+
+    user_profile_id -- PK of UserProfile to retrieve
+    """
     try:
         return UserProfile.objects.get(id=user_profile_id)
     except UserProfile.DoesNotExist:

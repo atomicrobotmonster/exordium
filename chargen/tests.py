@@ -3,9 +3,7 @@ from models import validate_attribute
 from django.core.exceptions import ValidationError
 
 class AttributeValidatorTests(TestCase):
-    """
-    attribute validator should only permit values of -1 to 5 inclusive.
-    """
+    """Attribute validator should only permit values of -1 to 5 inclusive."""
 
     def test_validate_attribute_below_range(self):
         with self.assertRaises(ValidationError):

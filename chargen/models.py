@@ -7,10 +7,20 @@ from django.conf import settings
 class UserProfile(models.Model):
     """Uses this character generator; has characters"""
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    name = models.CharField(max_length=200)
+    #name = models.CharField(max_length=200)
 
     def __unicode__(self):
-        return self.name
+        return self.name()
+
+    def name(self):
+        return self.user.first_name + " " + self.user.last_name
+
+
+
+def validate_attribute(value):
+    """Validator for attribute value range"""
+    if value < -1 or value > 5:
+        raise ValidationError(u'%s is outside range of valid attribute values (-1 to 5)' % value)
 
 def validate_attribute(value):
     """Validator for attribute value range"""

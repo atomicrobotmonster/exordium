@@ -5,14 +5,17 @@ from django.contrib.auth import get_user_model
 
 #TODO having two serializers for UserProfile violates the DRY-principle
 class UserProfileUpsertSerializer(serializers.Serializer):
+    """Upsert specific serialier to ensure Users and UserProfile are created together."""
+
     username = serializers.CharField(max_length=200)
     email = serializers.EmailField()
     password = serializers.CharField(max_length=200)
     first_name = serializers.CharField(max_length=200)
     last_name = serializers.CharField(max_length=200)
 
+    #TODO this could be re-written using a Manager per http://www.django-rest-framework.org/api-guide/serializers/#modelserializer
+    #see "Handling saving related instances in model manager classes"
     def create(self, validated_data):
-        print validated_data
         user = get_user_model()()
         user.username = validated_data['username']
         user.set_password(validated_data['password'])
@@ -44,4 +47,4 @@ class CharacterSummarySerializer(serializers.ModelSerializer):
 class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character
-        fields = ('name', 'unassigned_attribute_points', 'strength', 'agility', 'mind', 'appeal')
+        fields = ('name', 'user_profile', 'unassigned_attribute_points', 'strength', 'agility', 'mind', 'appeal')

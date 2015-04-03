@@ -61,3 +61,9 @@ class CharacterDetailView(generics.RetrieveAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
 
+class CharacterCreateView(generics.CreateAPIView):
+    """Generic view for retrieving character details"""
+   
+    queryset = Character.objects.all()
+    serializer_class = CharacterSerializer    
+

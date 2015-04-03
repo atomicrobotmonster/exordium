@@ -1,12 +1,11 @@
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
-from rest_framework.views import APIView
-from rest_framework import status
-from django.http import Http404
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import generics, status
+from django.http import Http404
+from django.db import transaction, IntegrityError
 from models import UserProfile, Character
 from serializers import UserProfileSerializer, UserProfileUpsertSerializer, CharacterSummarySerializer, CharacterSerializer
-from rest_framework import generics
 
 
 class UserProfileCreateView(APIView):
@@ -15,14 +14,18 @@ class UserProfileCreateView(APIView):
     permission_classes=(AllowAny, )
 
     def post(self, request):
+        """Register a new user by atomically creating a User and associated UserProfile."""
         serializer = UserProfileUpsertSerializer(data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            with transaction.atomic():
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(status=status.HTTP_201_CREATED)
         
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except IntegrityError:
+            return Response({ 'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
 
 def get_user_profile(user_profile_id):
     """Utility function for retrieving a user profile or raising an HTTP 404.

@@ -1,4 +1,4 @@
-var cotopaxiApp = angular.module('cotopaxiApp', []);
+var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute']);
 
 cotopaxiApp.controller('CotopaxiCtrl', function ($scope) {
  

@@ -1,3 +1,4 @@
+from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,6 +8,20 @@ from django.db import transaction, IntegrityError
 from models import UserProfile, Character
 from serializers import UserProfileSerializer, UserProfileUpsertSerializer, CharacterSummarySerializer, CharacterSerializer
 
+
+class IsAuthenticatedUserForUserProfile(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        print("checking IsAuthenticatedUserForUserProfile permission for {} on {}").format(request.user, obj.user)
+
+        result = obj.user == request.user
+        print result
+        return result
+
+class IsAuthenticatedUserForCharacter(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        print("checking IsAuthenticatedUserForCharacter permission for {} on {}").format(request.user, obj.user_profile.user)
+
+        return obj.user_profile.user == request.user        
 
 class UserProfileCreateView(APIView):
     """Custom view for upserting User Profiles"""
@@ -40,19 +55,12 @@ def get_user_profile(user_profile_id):
 class UserProfileDetailView(APIView):
     """Custom view for retrieving user details"""
    
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedUserForUserProfile, )
 
     def get(self, request, user_profile_id):
         user_profile = get_user_profile(user_profile_id)
+        self.check_object_permissions(request, user_profile)
         serializer = UserProfileSerializer(user_profile)
-        return Response(serializer.data)
-
-class UserProfileCharacterListView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, user_profile_id):
-        user_profile = get_user_profile(user_profile_id)
-        serializer = CharacterSummarySerializer(user_profile.characters, many=True)
         return Response(serializer.data)
 
 class CharacterDetailView(mixins.CreateModelMixin, 
@@ -62,6 +70,7 @@ class CharacterDetailView(mixins.CreateModelMixin,
                           generics.GenericAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
+    permission_classes = (IsAuthenticatedUserForCharacter, )
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)

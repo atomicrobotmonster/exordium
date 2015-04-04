@@ -58,6 +58,7 @@ class UserProfileCharacterListView(APIView):
 class CharacterDetailView(mixins.CreateModelMixin, 
                           mixins.UpdateModelMixin,
                           mixins.RetrieveModelMixin,
+                          mixins.DestroyModelMixin,
                           generics.GenericAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
@@ -67,6 +68,9 @@ class CharacterDetailView(mixins.CreateModelMixin,
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs) 
 
 
 class CharacterListView(mixins.CreateModelMixin,

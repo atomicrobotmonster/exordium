@@ -33,7 +33,6 @@ class UserProfileUpsertSerializer(serializers.Serializer):
 
         user_profile = UserProfile()
         user_profile.user = user
-        #user_profile.name = user.first_name + ' ' + user.last_name
         user_profile.save()
 
         return user_profile

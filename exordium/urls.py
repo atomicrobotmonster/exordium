@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
 urlpatterns = patterns('',
-    url(r'', include('chargen.urls', namespace="chargen")),
+	url(r'', include('cotapaxi.urls', namespace="cotapaxi")),
+    url(r'^api/', include('chargen.urls', namespace="chargen")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )

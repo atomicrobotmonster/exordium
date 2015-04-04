@@ -1,4 +1,4 @@
-{% extends "chargen/base.html" %}
+{% extends "cotapaxi/base.html" %}
 
 {% block nav %}
 
@@ -21,7 +21,7 @@
 {% block content %}
 
           <div class="inner cover">
-            <h1 class="cover-heading">Heroes for an Age of High Adventure</h1>
+            <h1 class="cover-heading h3">Create Heroes for an Age of High Adventure</h1>
 
             {% for error in form.non_field_errors %}
             <div class="alert alert-danger" role="alert">
@@ -32,7 +32,7 @@
 
 
 
-            <form class="form-signin" action="{% url 'chargen:my-login' %}" method="POST">
+            <form class="form-signin" action="" method="POST">
               <label for="inputEmail" class="sr-only">Email address</label>
               <input type="text" name="username" id="inputEmail" class="form-control" placeholder="User name" required autofocus>
               <label for="inputPassword" class="sr-only">Password</label>

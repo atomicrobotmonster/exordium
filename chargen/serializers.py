@@ -59,7 +59,7 @@ class CharacterSummarySerializer(serializers.ModelSerializer):
 class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character
-        fields = ('name', 'user_profile', 'unassigned_attribute_points', 'strength', 'agility', 'mind', 'appeal')
+        fields = ('id', 'name', 'user_profile', 'unassigned_attribute_points', 'strength', 'agility', 'mind', 'appeal')
 
     def validate(self,data):
         """

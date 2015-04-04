@@ -1,7 +1,7 @@
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics, status
+from rest_framework import generics, mixins, status
 from django.http import Http404
 from django.db import transaction, IntegrityError
 from models import UserProfile, Character
@@ -47,7 +47,7 @@ class UserProfileDetailView(APIView):
         serializer = UserProfileSerializer(user_profile)
         return Response(serializer.data)
 
-class CharacterListView(APIView):
+class UserProfileCharacterListView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, user_profile_id):
@@ -55,15 +55,25 @@ class CharacterListView(APIView):
         serializer = CharacterSummarySerializer(user_profile.characters, many=True)
         return Response(serializer.data)
 
-class CharacterDetailView(generics.RetrieveAPIView):
-    """Generic view for retrieving character details"""
-   
+class CharacterDetailView(mixins.CreateModelMixin, 
+                          mixins.UpdateModelMixin,
+                          mixins.RetrieveModelMixin,
+                          generics.GenericAPIView):
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
 
-class CharacterCreateView(generics.CreateAPIView):
-    """Generic view for retrieving character details"""
-   
-    queryset = Character.objects.all()
-    serializer_class = CharacterSerializer    
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+
+class CharacterListView(mixins.CreateModelMixin,
+                        generics.GenericAPIView):
+
+    queryset = Character.objects.all()
+    serializer_class = CharacterSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)

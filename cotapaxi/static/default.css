@@ -22,3 +22,17 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0 !important;
   border-radius: 0 !important;
 }
+
+.panel {
+	background-color: rgba(119, 136, 153, 0.5);
+	border: 0;
+}
+
+.panel-heading {
+	background-color: rgba(119, 136, 153, 0.7) !important;
+	border: 0;
+}
+
+h1, h2, h3, h4, h5, h6 .panel-title {
+	color: #efefef !important;	
+}

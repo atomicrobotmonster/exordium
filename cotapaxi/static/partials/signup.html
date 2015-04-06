@@ -7,31 +7,31 @@
 		    <h3 class="panel-title">Register</h3>
 		  </div>
 		  <div class="panel-body">
-			<form role="form">
+			<form role="form" ng-submit="submitRegistration()">
 			  <div class="row">
 			    <div class="form-group col-lg-12">
 			      <label for="username">Username:</label>
-			      <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+			      <input type="text" class="form-control" id="username" placeholder="Enter username" ng-model="registration.username" required>
 			    </div>
 			  </div>
 			  <div class="row">
 				<div class="form-group col-lg-6">
 				  <label for="first-name">First Name:</label>
-				  <input type="text" class="form-control" id="first-name" placeholder="Enter first name" required>
+				  <input type="text" class="form-control" id="first-name" placeholder="Enter first name" ng-model="registration.first_name" required>
 				</div>
 				<div class="form-group col-lg-6">
 				  <label for="last-name">Last Name:</label>
-				  <input type="text" class="form-control" id="last-name" placeholder="Enter last name" required>
+				  <input type="text" class="form-control" id="last-name" placeholder="Enter last name" ng-model="registration.last_name" required>
 				</div>
 			  </div>
 			  <div class="row">
 			    <div class="form-group col-lg-6">
 			      <label for="email">Email:</label>
-			      <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+			      <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="registration.email" required>
 			    </div>
 			    <div class="form-group col-lg-6">
 			      <label for="password">Password:</label>
-			      <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+			      <input type="password" class="form-control" id="password" placeholder="Enter password" ng-model="registration.password" required>
 			    </div>
 			  </div>
 			  <div class="row">

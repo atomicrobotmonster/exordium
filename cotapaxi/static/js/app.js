@@ -26,14 +26,6 @@ cotopaxiApp.factory('UserProfile', function($resource) {
 });
 
 cotopaxiApp.controller('UserController', function ($http, $location, $scope, UserProfile) {
-  $scope.registration = new UserProfile
-  $scope.registration.username = ''
-  $scope.registration.first_name = ''
-  $scope.registration.last_name = ''
-  $scope.registration.email = ''
-  $scope.registration.password = ''
-  $scope.authenticated = false
-
   $scope.isActive = function (viewLocation) {
     var active = (viewLocation === $location.path());
     return active;
@@ -65,4 +57,35 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
     $scope.userProfile = UserProfile.get( { userProfileId: 1 })  
   }
 
+  $scope.newCharacter = function() {
+    $scope.currentCharacter = {
+      name: 'Unknown Wanderer',
+      unassigned_attribute_points: 4,
+      strength: 0,
+      agility: 0,
+      mind: 0,
+      appeal: 0
+    }
+  }
+
+  $scope.selectCharacter = function(index) {
+    $scope.currentCharacter = $scope.characters[index]
+  }
+
+  $scope.saveCharacter = function() {
+    alert('Saving...')
+  }
+
+  $scope.registration = new UserProfile
+  $scope.registration.username = ''
+  $scope.registration.first_name = ''
+  $scope.registration.last_name = ''
+  $scope.registration.email = ''
+  $scope.registration.password = ''
+  $scope.authenticated = false
+
+  $scope.characters = [{ name: 'Kahlen' }, { name: 'Maknar'} ] 
+  if ($scope.characters.length > 0) {
+    $scope.selectCharacter(0)
+  } 
 });

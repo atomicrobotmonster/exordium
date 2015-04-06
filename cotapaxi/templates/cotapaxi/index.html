@@ -23,13 +23,17 @@
   </head>
 
   <body ng-controller="UserController">
-    <nav id="main-nav" class="navbar navbar-inverse">
+    <nav id="main-nav" class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#/">Exordium</a>
         </div>
         <div>
         <ul class="nav navbar-nav navbar-right">
+          <li ng-class="{ active: isActive('/sign-up') }" ng-show="authenticated">
+            <a href="" ng-click="newCharacter()"><span class="glyphicon glyphicon-plus"></span> New Character</a>
+          </li>
+
           <li ng-class="{ active: isActive('/sign-up') }" ng-hide="authenticated">
             <a href="#sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
           </li>

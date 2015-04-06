@@ -26,24 +26,29 @@
     <nav id="main-nav" class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#app-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
           <a class="navbar-brand" href="#/">Exordium</a>
         </div>
-        <div>
-        <ul class="nav navbar-nav navbar-right">
-          <li ng-class="{ active: isActive('/sign-up') }" ng-show="authenticated">
-            <a href="" ng-click="newCharacter()"><span class="glyphicon glyphicon-plus"></span> New Character</a>
-          </li>
+        <div class="collapse navbar-collapse" id="app-nav">
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{ active: isActive('/sign-up') }" ng-show="authenticated">
+              <a href="" ng-click="newCharacter()"><span class="glyphicon glyphicon-plus"></span> New Character</a>
+            </li>
 
-          <li ng-class="{ active: isActive('/sign-up') }" ng-hide="authenticated">
-            <a href="#sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
-          </li>
-          <li ng-class="{ active: isActive('/login') }"ng-hide="authenticated">
-            <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-          </li>
-          <li ng-show="authenticated">
-            <a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-          </li>
-        </ul>
+            <li ng-class="{ active: isActive('/sign-up') }" ng-hide="authenticated">
+              <a href="#sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+            </li>
+            <li ng-class="{ active: isActive('/login') }"ng-hide="authenticated">
+              <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+            </li>
+            <li ng-show="authenticated">
+              <a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

@@ -2,34 +2,27 @@ body {
 	background: url("Church_Cotopaxi_1862.jpg") no-repeat center center fixed; 
   	background-size: cover;
 	color: #efefef !important;
-	text-shadow: 1px 1px #4f4f4f;	
 }
 
 .navbar-brand {
-	text-shadow: #4f4f4f !important;
+	text-shadow: 1px 1px 1px #4f4f4f !important;
 }
 
 #content .jumbotron {
-	background-color: rgba(119, 136, 153, 0.2)
+	background-color: rgba(30, 30, 30, 0.7);
 }
 
 h1, h2, h3, h4, h5, h6 {
-	text-shadow: 2px 2px #4f4f4f;
+	text-shadow: 2px 2px 2px #4f4f4f;
 }
 
 /* remove rounded corners from bootstrap navbar */
 .navbar {
   border-radius: 0 !important;
-  border-radius: 0 !important;
 }
 
 .panel {
-	background-color: rgba(119, 136, 153, 0.5);
-	border: 0;
-}
-
-.panel-heading {
-	background-color: rgba(119, 136, 153, 0.7) !important;
+	background-color: rgba(30, 30, 30, 0.7);
 	border: 0;
 }
 

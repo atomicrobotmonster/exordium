@@ -42,6 +42,20 @@ class UserProfileCreateView(APIView):
         except IntegrityError:
             return Response({ 'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
 
+
+class CurrentUserProfileDetailView(APIView):
+    """Custom view retrieving the user profile for the currently authenticated user."""
+   
+    permission_classes=(IsAuthenticated, )
+
+    def get(self, request):
+        """Gets the user profile for the currently authenticated user."""
+       
+        user_profile = request.user.userprofile
+        serializer = UserProfileSerializer(user_profile)
+        return Response(serializer.data)
+
+
 def get_user_profile(user_profile_id):
     """Utility function for retrieving a user profile or raising an HTTP 404.
 

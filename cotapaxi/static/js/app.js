@@ -4,7 +4,7 @@ cotopaxiApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'static/partials/welcome.html',
+        templateUrl: 'static/partials/main.html',
       }).
 
       when('/sign-up', {
@@ -12,6 +12,9 @@ cotopaxiApp.config(['$routeProvider',
       }).
       when('/login', {
         templateUrl: 'static/partials/login.html'
+      }).
+      when('/editor', {
+        templateUrl: 'static/partials/editor.html'
       }).
       otherwise({
         redirectTo: '/'
@@ -36,12 +39,14 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
 
     $http.defaults.headers.common['Authorization'] = 'Basic ' + $scope.registration.username + ':' + $scope.registration.password
     $scope.authenticated = true
+    $location.path('/')
   }
 
   $scope.login = function() {
     /* FIXME crude, will apply to all HTTP requests */
     $http.defaults.headers.common['Authorization'] = 'Basic ' + $scope.username + ':' + $scope.password
     $scope.authenticated = true
+    $location.path('/')
   }
 
   $scope.logout = function() {

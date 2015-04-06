@@ -34,6 +34,11 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
   $scope.registration.password = ''
   $scope.authenticated = false
 
+  $scope.isActive = function (viewLocation) {
+    var active = (viewLocation === $location.path());
+    return active;
+  }
+
   $scope.submitRegistration = function() {
     $scope.registration.$save()
 

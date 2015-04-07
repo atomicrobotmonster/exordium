@@ -102,10 +102,26 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Reg
 
   $scope.selectCharacter = function(characterId) {
     $scope.showNewCharacterLink = false
+    $scope.badAttributePoints = false
     $scope.currentCharacter = Character.get({ 'id': characterId })
   }
 
+  function totalCharacterPoints(character) {
+    return character.unassigned_attribute_points 
+      + character.strength 
+      + character.agility
+      + character.mind
+      + character.appeal
+  }
+
   $scope.saveCharacter = function() {
+    if (totalCharacterPoints($scope.currentCharacter) != 4) {
+      $scope.badAttributePoints = true
+      return
+    } else {
+      $scope.badAttributePoints = false
+    }
+
     if (!$scope.currentCharacter.id) {
       $scope.currentCharacter.$save(function(data) {
         refreshUserProfile(data.id)
@@ -125,6 +141,7 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Reg
 
   $scope.newCharacter = function() {
     $scope.showNewCharacterLink = true
+    $scope.badAttributePoints = false
     $scope.currentCharacter = new Character
     $scope.currentCharacter.id = null
     $scope.currentCharacter.name = 'Unknown Wanderer'

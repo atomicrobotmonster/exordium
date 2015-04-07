@@ -21,7 +21,8 @@
                 <div class="form-group">
                   <label for="name" class="control-label">Name</label>
                   <input type="text" class="form-control" id="name" placeholder="Character name" required ng-model="currentCharacter.name">
-                 </div>
+                </div>
+                <p ng-show="badAttributePoints" class="bg-danger">Attribute points are not assigned correctly.</p>
                 <div class="form-group">
                   <label for="unassigned-attribute-points" class="control-label">Unassigned Points</label>
                   <input type="number" min="0" max="5" class="form-control" id="unassigned-attribute-points" placeholder="Unassigned attribute points" required ng-model="currentCharacter.unassigned_attribute_points">

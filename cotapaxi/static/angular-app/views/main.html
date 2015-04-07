@@ -1,4 +1,4 @@
-        <div ng-hide="authenticated" class="jumbotron">
+        <div ng-hide="shared.authenticated" class="jumbotron">
           <h1>Enter an Age of High Adventure</h1> 
           <p>Exordium is a character creation aid for the &ldquo;Barbarians of Lemuria&rdquo; pen and paper roleplaying game.</p> 
           <ul class="list-inline">
@@ -7,13 +7,13 @@
           </ul>
         </div> <!-- end jumbotron -->
 
-        <div id="editor-panel" ng-show="authenticated" class="panel panel-default">
+        <div id="editor-panel" ng-show="shared.authenticated" class="panel panel-default">
           <div class="panel-body">    
             <div class="row">
               <nav id="character-selector" class="col-sm-3">
                 <ul class="nav nav-stacked">
                   <li ng-show="showNewCharacterLink" class="selected"><a href="">New Character <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
-                  <li ng-repeat="character in userProfile.characters | orderBy:'name'" ng-class="{ selected: isEditing(character.id) }"><a href="" ng-click="selectCharacter(character.id)">{{character.name}} <span class="glyphicon glyphicon-chevron-right pull-right" ng-show="isEditing(character.id)"></span></a></li>
+                  <li ng-repeat="character in shared.userProfile.characters | orderBy:'name'" ng-class="{ selected: isEditing(character.id) }"><a href="" ng-href="#/character/{{character.id}}">{{character.name}} <span class="glyphicon glyphicon-chevron-right pull-right" ng-show="isEditing(character.id)"></span></a></li>
                 </ul>
               </nav> <!-- end #character-selector-->
               <form id="character-editor" class="col-sm-9" ng-submit="saveCharacter()">

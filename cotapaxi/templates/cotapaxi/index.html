@@ -22,7 +22,7 @@
     <![endif]-->
   </head>
 
-  <body ng-controller="UserController">
+  <body ng-controller="AppController">
     <nav id="main-nav" class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -35,17 +35,17 @@
         </div>
         <div class="collapse navbar-collapse" id="app-nav">
           <ul class="nav navbar-nav navbar-right">
-            <li ng-show="authenticated" ng-class="{ active: showNewCharacterLink }">
-              <a href="" ng-click="newCharacter()"><span class="glyphicon glyphicon-plus"></span> New Character</a>
+            <li ng-show="shared.authenticated" ng-class="{ active: isActive('/new-character') }">
+              <a href="#new-character"><span class="glyphicon glyphicon-plus"></span> New Character</a>
             </li>
-            <li ng-class="{ active: isActive('/sign-up') }" ng-hide="authenticated">
+            <li ng-class="{ active: isActive('/sign-up') }" ng-hide="shared.authenticated">
               <a href="#sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
             </li>
-            <li ng-class="{ active: isActive('/login') }"ng-hide="authenticated">
+            <li ng-class="{ active: isActive('/login') }"ng-hide="shared.authenticated">
               <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
             </li>
-            <li ng-show="authenticated">
-              <a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            <li ng-show="shared.authenticated">
+              <a href="#logout" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
             </li>
           </ul>
         </div>

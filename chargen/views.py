@@ -112,6 +112,7 @@ class CharacterListView(mixins.CreateModelMixin,
 
     queryset = Character.objects.all()
     serializer_class = CharacterSerializer
+    permission_classes = (IsAuthenticatedUserForCharacter, )
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)

@@ -35,10 +35,9 @@
         </div>
         <div class="collapse navbar-collapse" id="app-nav">
           <ul class="nav navbar-nav navbar-right">
-            <li ng-class="{ active: isActive('/sign-up') }" ng-show="authenticated">
+            <li ng-show="authenticated" ng-class="{ active: showNewCharacterLink }">
               <a href="" ng-click="newCharacter()"><span class="glyphicon glyphicon-plus"></span> New Character</a>
             </li>
-
             <li ng-class="{ active: isActive('/sign-up') }" ng-hide="authenticated">
               <a href="#sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
             </li>

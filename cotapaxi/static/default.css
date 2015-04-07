@@ -33,3 +33,31 @@ h1, h2, h3, h4, h5, h6 .panel-title {
 form .bg-danger {
 	color: red;
 }
+
+#character-selector a {
+	color: white;
+	font-weight: bold;
+}
+
+#character-selector li a:link {
+	background-color: rgba(117,104,96,0.7);
+}
+
+#character-selector li.selected a:link {
+	background-color: rgba(158,108,76,0.7);
+}
+
+#character-selector li.selected a:visited {
+	background-color: rgba(158,108,76,0.7);
+}
+
+#character-selector li.selected a:hover, #character-selector li a:hover {
+	background-color: rgba(255,100,0,0.7);
+}
+
+#character-selector li a:active {
+	background-color: rgba(255,100,0,0.7);
+}	
+
+
+

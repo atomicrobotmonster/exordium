@@ -20,7 +20,7 @@ class UserProfileUpsertSerializer(serializers.Serializer):
         """
         Atomically create User and UserProfile.
 
-        TODO this could be re-written using a Manager per http://www.django-rest-framework.org/api-guide/serializers/#modelserializer
+        TODO this could probably be re-written using a Manager per http://www.django-rest-framework.org/api-guide/serializers/#modelserializer
         see "Handling saving related instances in model manager classes"
         """
         user = get_user_model()()
@@ -37,23 +37,25 @@ class UserProfileUpsertSerializer(serializers.Serializer):
 
         return user_profile
 
+class CharacterSummarySerializer(serializers.ModelSerializer):
+    """Serializer for summaries of Characters"""
+    class Meta:
+        model = Character
+        fields = ('id', 'name', )
+
 class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializer for User Profile.
 
     TODO can this be merged with the UserProfileUpsert serializer?
     """
-    characters = serializers.PrimaryKeyRelatedField(many=True, queryset=Character.objects.all())
+    #characters = serializers.PrimaryKeyRelatedField(many=True, queryset=Character.objects.all())
+    characters = CharacterSummarySerializer(many=True, read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ('name', 'characters')
+        fields = ('id', 'name', 'characters')
 
-class CharacterSummarySerializer(serializers.ModelSerializer):
-    """Serializer for summaries of Characters"""
-    class Meta:
-        model = Character
-        fields = ('id', 'name', )
 
 class CharacterSerializer(serializers.ModelSerializer):
     class Meta:

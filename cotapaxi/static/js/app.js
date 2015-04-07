@@ -13,19 +13,26 @@ cotopaxiApp.config(['$routeProvider',
       when('/login', {
         templateUrl: 'static/partials/login.html'
       }).
-      when('/editor', {
-        templateUrl: 'static/partials/editor.html'
-      }).
       otherwise({
         redirectTo: '/'
-      });
-  }]);
+      })
+  }])
+
+cotopaxiApp.factory('Registration', function($resource) {
+  return $resource('http://localhost:8000/api/userprofile')  
+})
 
 cotopaxiApp.factory('UserProfile', function($resource) {
   return $resource('http://localhost:8000/api/current-user')  
-});
+})
 
-cotopaxiApp.controller('UserController', function ($http, $location, $scope, UserProfile) {
+cotopaxiApp.factory('Character', function($resource) {
+  return $resource('http://localhost:8000/api/character/:id', null, {
+    'update': { method:'PUT', params: {id:'@id'} }
+  }) 
+})
+
+cotopaxiApp.controller('UserController', function ($http, $location, $scope, Registration, UserProfile, Character) {
   $scope.$on('$routeChangeSuccess', function () {
     $scope.badCredentials = false
     $scope.authentication.password = ''
@@ -34,6 +41,10 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
   $scope.isActive = function (viewLocation) {
     var active = (viewLocation === $location.path());
     return active;
+  }
+
+  $scope.isEditing = function (characterId) {
+    return characterId === $scope.currentCharacter.id;
   }
 
   function handleHttpError(error) {
@@ -45,24 +56,41 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
     }
   }
 
-  $scope.submitRegistration = function() {
-    $scope.registration.$save()
+  function refreshUserProfile(preferredIdInList) {
+    $scope.userProfile = UserProfile.get(function(data) {
+      $scope.authenticated = true
+      $scope.badCredentials = false
 
-    $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa($scope.registration.username + ':' + $scope.registration.password)
-    $scope.authenticated = true
-    $scope.badCredentials = false
-    $location.path('/')
+      if (data.characters.length == 0) {
+        $scope.newCharacter()
+      } else {
+        var idToSelect
+        if (preferredIdInList) {
+          idToSelect = preferredIdInList
+        } else {
+          idToSelect = data.characters.sort(function(a, b) {
+            var x = a['name']; var y = b['name']
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0))
+          })[0].id
+        }
+        $scope.selectCharacter(idToSelect)
+      }
+      $location.path('/')
+    }, handleHttpError)
+  }
+
+  $scope.submitRegistration = function() {
+    $scope.registration.$save(function(data) {
+      $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa($scope.registration.username + ':' + $scope.registration.password)
+      refreshUserProfile()
+    })
+
   }
 
   $scope.login = function() {
     /* FIXME crude, will apply to all HTTP requests */
     $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa($scope.authentication.username + ':' + $scope.authentication.password)
-  
-    $scope.userProfile = UserProfile.get(function(data) {
-      $scope.authenticated = true
-      $scope.badCredentials = false
-      $location.path('/')
-    }, handleHttpError)
+    refreshUserProfile()
   }
 
   $scope.logout = function() {
@@ -72,27 +100,45 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
     $location.path('/')
   }
 
-  $scope.newCharacter = function() {
-    $scope.currentCharacter = {
-      name: 'Unknown Wanderer',
-      unassigned_attribute_points: 4,
-      strength: 0,
-      agility: 0,
-      mind: 0,
-      appeal: 0
-    }
-  }
-
-  $scope.selectCharacter = function(index) {
-    $scope.currentCharacter = $scope.characters[index]
+  $scope.selectCharacter = function(characterId) {
+    $scope.showNewCharacterLink = false
+    $scope.currentCharacter = Character.get({ 'id': characterId })
   }
 
   $scope.saveCharacter = function() {
-    alert('Saving...')
+    if (!$scope.currentCharacter.id) {
+      $scope.currentCharacter.$save(function(data) {
+        refreshUserProfile(data.id)
+      })      
+    } else {
+      $scope.currentCharacter.$update(function(data) {
+        refreshUserProfile($scope.currentCharacter.id)
+      })
+    }
   }
 
+  $scope.deleteCharacter = function(id) {
+    $scope.currentCharacter.$remove({id: id}, function(data) {
+      refreshUserProfile()
+    })
+  }
+
+  $scope.newCharacter = function() {
+    $scope.showNewCharacterLink = true
+    $scope.currentCharacter = new Character
+    $scope.currentCharacter.id = null
+    $scope.currentCharacter.name = 'Unknown Wanderer'
+    $scope.currentCharacter.unassigned_attribute_points = 4
+    $scope.currentCharacter.strength = 0
+    $scope.currentCharacter.agility = 0
+    $scope.currentCharacter.mind = 0
+    $scope.currentCharacter.appeal = 0
+    $scope.currentCharacter.user_profile = $scope.userProfile.id
+  }
+
+  $scope.showNewCharacterLink = false
   $scope.badCredentials = false;
-  $scope.registration = new UserProfile
+  $scope.registration = new Registration
   $scope.registration.username = ''
   $scope.registration.first_name = ''
   $scope.registration.last_name = ''
@@ -100,9 +146,4 @@ cotopaxiApp.controller('UserController', function ($http, $location, $scope, Use
   $scope.registration.password = ''
   $scope.authenticated = false
   $scope.authentication = { username: '', password: ''}
-
-  $scope.characters = [{ name: 'Kahlen' }, { name: 'Maknar'} ] 
-  if ($scope.characters.length > 0) {
-    $scope.selectCharacter(0)
-  } 
-});
+})

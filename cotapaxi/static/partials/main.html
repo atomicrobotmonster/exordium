@@ -10,12 +10,14 @@
         <div id="editor-panel" ng-show="authenticated" class="panel panel-default">
           <div class="panel-body">    
             <div class="row">
-              <nav id="character-selector" ng-show="characters.length" class="col-sm-2">
+              <nav id="character-selector" class="col-sm-3">
                 <ul class="nav nav-stacked">
-                  <li ng-repeat="character in characters"><a href="" ng-click="selectCharacter($index)">{{character.name}}</a></li>
+                  <li ng-show="showNewCharacterLink" class="selected"><a href="">New Character <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
+                  <li ng-repeat="character in userProfile.characters | orderBy:'name'" ng-class="{ selected: isEditing(character.id) }"><a href="" ng-click="selectCharacter(character.id)">{{character.name}} <span class="glyphicon glyphicon-chevron-right pull-right" ng-show="isEditing(character.id)"></span></a></li>
                 </ul>
               </nav> <!-- end #character-selector-->
-              <form id="character-editor" class="col-sm-8" ng-submit="saveCharacter()">
+              <form id="character-editor" class="col-sm-9" ng-submit="saveCharacter()">
+                <input type="hidden" ng-model="currentCharacter.id">
                 <div class="form-group">
                   <label for="name" class="control-label">Name</label>
                   <input type="text" class="form-control" id="name" placeholder="Character name" required ng-model="currentCharacter.name">
@@ -41,7 +43,7 @@
                   <input type="number" min="-1" max="4" class="form-control" id="appeal" placeholder="Appeal points" required ng-model="currentCharacter.appeal">
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok-circle"></span> Save</button> <button type="button" class="btn btn-primary" ng-click="deleteCharacter(currentCharacter.id)" ng-show="currentCharacter.id"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
                 </div>    
               </form>              
             </div>

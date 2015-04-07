@@ -1,38 +1,20 @@
-var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute', 'ngResource']);
+var cotopaxiUser = angular.module("cotopaxiUser", ['ngResource'])
 
-cotopaxiApp.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-      when('/', {
-        templateUrl: 'static/angular-app/views/main.html',
-      }).
-
-      when('/sign-up', {
-        templateUrl: 'static/angular-app/views/signup.html',
-      }).
-      when('/login', {
-        templateUrl: 'static/angular-app/views/login.html'
-      }).
-      otherwise({
-        redirectTo: '/'
-      })
-  }])
-
-cotopaxiApp.factory('Registration', function($resource) {
+cotopaxiUser.factory('Registration', function($resource) {
   return $resource('http://localhost:8000/api/userprofile')  
 })
 
-cotopaxiApp.factory('UserProfile', function($resource) {
+cotopaxiUser.factory('UserProfile', function($resource) {
   return $resource('http://localhost:8000/api/current-user')  
 })
 
-cotopaxiApp.factory('Character', function($resource) {
+cotopaxiUser.factory('Character', function($resource) {
   return $resource('http://localhost:8000/api/character/:id', null, {
     'update': { method:'PUT', params: {id:'@id'} }
   }) 
 })
 
-cotopaxiApp.controller('UserController', function ($http, $location, $scope, Registration, UserProfile, Character) {
+cotopaxiUser.controller('UserController', function ($http, $location, $scope, Registration, UserProfile, Character) {
   $scope.$on('$routeChangeSuccess', function () {
     $scope.badCredentials = false
     $scope.authentication.password = ''

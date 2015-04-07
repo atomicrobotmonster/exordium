@@ -1,7 +1,7 @@
 var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute', 'cotopaxiUser']);
 
 cotopaxiApp.config(['$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.
       when('/', {
         templateUrl: 'static/angular-app/views/main.html',
@@ -26,4 +26,5 @@ cotopaxiApp.config(['$routeProvider',
       otherwise({
         redirectTo: '/'
       })
-  }])
+  }
+])

@@ -136,6 +136,13 @@ cotopaxiUser.controller('CharacterEditorController', function ($http, $location,
     })
   }
 
+  //TODO lame... should be able to handle this in route...
+  if (!$scope.shared.authenticated && $location.path().indexOf("/character") != -1) {
+    $location.path("/login")
+    return
+  }
+
+
   $scope.showNewCharacterLink = false
   
   var idToSelect = null
@@ -193,6 +200,12 @@ cotopaxiUser.controller('NewCharacterController', function ($http, $location, $s
         $location.path("/character/" + savedCharacter.id)
       })
     })      
+  }
+
+  //TODO lame... should be able to handle this in route...
+  if (!$scope.shared.authenticated) {
+    $location.path("/login")
+    return
   }
 
   $scope.showNewCharacterLink = true

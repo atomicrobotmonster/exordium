@@ -59,5 +59,53 @@ form .bg-danger {
 	background-color: rgba(255,100,0,0.7);
 }	
 
+input.spinner-field {
+	width: 90%;
+	height: 100%;
+	max-width: 150px;
+	max-height: 190px;
+	min-width: 85px;
+	font-size: 72px;
+	text-align: center;
+	color: white;
+}
 
+label.spinner-label {
+	text-align: center;
+	width: 120px;
+}
+
+#strength-field {
+	background-image: url('strength-150.jpg');
+	background-size: cover;
+}
+
+#agility-field {
+	background-image: url('agility-150.jpg');
+	background-size: cover;
+}
+
+#mind-field {
+	background-image: url('mind-150.jpg');	
+	background-size: cover;
+}
+
+#appeal-field {
+	background-image: url('appeal-150.jpg');
+	background-size: cover;
+}
+
+#unassigned-field {
+	background-image: url('unassigned-150.jpg');
+	background-size: cover;	
+}
+
+#attribute-equals {
+	height: 200px;
+}
+
+#attribute-equals p {
+	padding-top: 40px;
+	font-size: 64px;
+}
 

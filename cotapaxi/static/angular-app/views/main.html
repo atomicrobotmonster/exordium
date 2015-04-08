@@ -23,26 +23,32 @@
                   <input type="text" class="form-control" id="name" placeholder="Character name" required ng-model="currentCharacter.name">
                 </div>
                 <p ng-show="badAttributePoints" class="bg-danger">Attribute points are not assigned correctly.</p>
-                <div class="form-group">
-                  <label for="unassigned-attribute-points" class="control-label">Unassigned Points</label>
-                  <input type="number" min="0" max="5" class="form-control" id="unassigned-attribute-points" placeholder="Unassigned attribute points" required ng-model="currentCharacter.unassigned_attribute_points">
-                </div>
-                <div class="form-group">
-                  <label for="strength" class="control-label">Strength</label>
-                  <input type="number" min="-1" max="4" class="form-control" id="strength" placeholder="Strength points" required ng-model="currentCharacter.strength">
-                </div>
-                <div class="form-group">
-                  <label for="agility" class="control-label">Agility</label>
-                  <input type="number" min="-1" max="4" class="form-control" id="agility" placeholder="Agility points" required ng-model="currentCharacter.agility">
-                </div>
-                <div class="form-group">
-                  <label for="mind" class="control-label">Mind</label>
-                  <input type="number" min="-1" max="4" class="form-control" id="mind" placeholder="Mind points" required ng-model="currentCharacter.mind">
-                </div>
-                <div class="form-group">
-                  <label for="appeal" class="control-label">Appeal</label>
-                  <input type="number" min="-1" max="4" class="form-control" id="appeal" placeholder="Appeal points" required ng-model="currentCharacter.appeal">
-                </div>
+                <div id="attribute-row" class="row">
+                  <div class="form-group col-sm-2">
+                    <label for="unassigned-field" class="control-label spinner-label">Unassigned</label>
+                    <input type="number" min="0" max="5" class="form-control spinner-field" id="unassigned-field" required ng-model="currentCharacter.unassigned_attribute_points">
+                  </div>
+                  <div id="attribute-equals" class="col-sm-1">
+                    <p>=</p>
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label for="strength-field" class="control-label spinner-label">Strength</label>
+                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="strength-field" required ng-model="currentCharacter.strength">
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label for="agility-field" class="control-label spinner-label">Agility</label>
+                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="agility-field" required ng-model="currentCharacter.agility">
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label for="mind-field" class="control-label spinner-label">Mind</label>
+                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="mind-field" required ng-model="currentCharacter.mind">
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label for="appeal-field" class="control-label spinner-label">Appeal</label>
+                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="appeal-field" required ng-model="currentCharacter.appeal">
+                  </div>
+                </div> <!-- end attribute row -->
+                
                 <div class="form-group">
                   <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok-circle"></span> Save</button> <button type="button" class="btn btn-primary" ng-click="deleteCharacter(currentCharacter.id)" ng-show="currentCharacter.id"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
                 </div>    

@@ -1,7 +1,8 @@
-from rest_framework import serializers
+from rest_framework import serializers, validators
 from models import UserProfile, Character
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 CHARACTER_GENERATION_ATTRIBUTE_POINTS = 4
 
@@ -12,7 +13,8 @@ class UserProfileUpsertSerializer(serializers.Serializer):
 
     """Upsert specific serialier to ensure Users and UserProfile are created together."""
 
-    username = serializers.CharField(max_length=200)
+    username = serializers.CharField(max_length=200, validators=[
+                                     validators.UniqueValidator(queryset=User.objects.all())])
     email = serializers.EmailField()
     password = serializers.CharField(max_length=200)
     first_name = serializers.CharField(max_length=200)
@@ -23,11 +25,12 @@ class UserProfileUpsertSerializer(serializers.Serializer):
         Atomically create User and UserProfile, delegated to manager.
         """
         return UserProfile.objects.create(
-            username = validated_data['username'],
-            password = validated_data['password'],
-            email = validated_data['email'],
-            first_name = validated_data['first_name'],
-            last_name = validated_data['last_name'])
+            username=validated_data['username'],
+            password=validated_data['password'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'])
+
 
 class CharacterSummarySerializer(serializers.ModelSerializer):
 

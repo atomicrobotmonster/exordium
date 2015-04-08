@@ -47,21 +47,23 @@ class UserProfileCreateView(generics.CreateAPIView):
     """Custom view for upserting User Profiles"""
 
     permission_classes = (AllowAny, )
+    serializer_class = UserProfileUpsertSerializer
 
     def create(self, request,  *args, **kwargs):
-        """Register a new user by atomically creating a User and associated UserProfile."""
+        """Register a new user by atomically creating a User and associated UserProfile.
 
-        request_serializer = UserProfileUpsertSerializer(data=request.data)
+        NB: This view is custom because we really don't want to be serializing the password
+        back to the caller.
+        """
 
-        try:
-            with transaction.atomic():
-                if request_serializer.is_valid():
-                    request_serializer.save()
-                    return Response(status=status.HTTP_201_CREATED)
+        request_serializer = self.get_serializer(data=request.data)
 
-                return Response(request_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except IntegrityError:
-            return Response({'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
+        with transaction.atomic():
+            if request_serializer.is_valid():
+                user_profile = request_serializer.save()
+                return Response(status=status.HTTP_201_CREATED)
+
+            return Response(request_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CurrentUserProfileDetailView(generics.RetrieveAPIView):

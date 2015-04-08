@@ -7,6 +7,7 @@ from django.conf import settings
 
 
 class UserProfileManager(models.Manager):
+
     def create(self, username, password, email, first_name, last_name):
         user = get_user_model()()
         user.username = username
@@ -21,6 +22,7 @@ class UserProfileManager(models.Manager):
         user_profile.save()
 
         return user_profile
+
 
 class UserProfile(models.Model):
 

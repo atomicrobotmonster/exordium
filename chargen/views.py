@@ -68,27 +68,12 @@ class CurrentUserProfileDetailView(APIView):
         return Response(self.serializer_class(user_profile).data)
 
 
-def get_user_profile(user_profile_id):
-    """Utility function for retrieving a user profile or raising an HTTP 404.
-
-    user_profile_id -- PK of UserProfile to retrieve
-    """
-    try:
-        return UserProfile.objects.get(id=user_profile_id)
-    except UserProfile.DoesNotExist:
-        raise Http404
-
-class UserProfileDetailView(APIView):
-    """Custom view for retrieving user details"""
-    
+class UserProfileDetailView(generics.RetrieveAPIView):
     authentication_classes = (QuietBasicAuthentication, )
     permission_classes = (IsAuthenticated, IsUserForUserProfile, )
-
-    def get(self, request, user_profile_id):
-        user_profile = get_user_profile(user_profile_id)
-        self.check_object_permissions(request, user_profile)
-        serializer = UserProfileSerializer(user_profile)
-        return Response(serializer.data)
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+    lookup_field = 'id'
 
 class CharacterViewSet(viewsets.ModelViewSet):
     serializer_class = CharacterSerializer
@@ -98,4 +83,3 @@ class CharacterViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Character.objects.filter(user_profile = user.userprofile)
-        

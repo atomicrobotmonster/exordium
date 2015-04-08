@@ -20,15 +20,14 @@ class QuietBasicAuthentication(BasicAuthentication):
     def authenticate_header(self, request):
         return 'xBasic realm="%s"' % self.www_authenticate_realm
 
-class IsAuthenticatedUserForUserProfile(permissions.BasePermission):
+class IsUserForUserProfile(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         print("checking IsAuthenticatedUserForUserProfile permission for {} on {}").format(request.user, obj.user)
 
         result = obj.user == request.user
-        print result
         return result
 
-class IsAuthenticatedUserForCharacter(permissions.BasePermission):
+class IsUserForCharacter(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         print("checking IsAuthenticatedUserForCharacter permission for {} on {}").format(request.user, obj.user_profile.user)
 
@@ -41,6 +40,7 @@ class UserProfileCreateView(APIView):
 
     def post(self, request):
         """Register a new user by atomically creating a User and associated UserProfile."""
+        
         serializer = UserProfileUpsertSerializer(data=request.data)
         
         try:
@@ -56,6 +56,7 @@ class UserProfileCreateView(APIView):
 
 class CurrentUserProfileDetailView(APIView):
     """Custom view retrieving the user profile for the currently authenticated user."""
+    
     authentication_classes = (QuietBasicAuthentication, )
     permission_classes=(IsAuthenticated, )
     serializer_class = UserProfileSerializer
@@ -79,8 +80,9 @@ def get_user_profile(user_profile_id):
 
 class UserProfileDetailView(APIView):
     """Custom view for retrieving user details"""
-   
-    permission_classes = (IsAuthenticatedUserForUserProfile, )
+    
+    authentication_classes = (QuietBasicAuthentication, )
+    permission_classes = (IsAuthenticated, IsUserForUserProfile, )
 
     def get(self, request, user_profile_id):
         user_profile = get_user_profile(user_profile_id)
@@ -89,12 +91,20 @@ class UserProfileDetailView(APIView):
         return Response(serializer.data)
 
 class CharacterDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Character.objects.all()
     serializer_class = CharacterSerializer
-    permission_classes = (IsAuthenticatedUserForCharacter, )
+    permission_classes = (IsAuthenticated, IsUserForCharacter, )
+    authentication_classes = (QuietBasicAuthentication, )
+
+    def get_queryset(self):
+        user = self.request.user
+        return Character.objects.filter(user_profile = user.userprofile)
 
 
 class CharacterListView(generics.ListCreateAPIView):
-    queryset = Character.objects.all()
+    authentication_classes = (QuietBasicAuthentication, )
+    permission_classes = (IsAuthenticated, IsUserForCharacter, )
     serializer_class = CharacterSerializer
-    permission_classes = (IsAuthenticatedUserForCharacter, )
+
+    def get_queryset(self):
+        user = self.request.user
+        return Character.objects.filter(user_profile = user.userprofile)

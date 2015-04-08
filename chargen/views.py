@@ -54,19 +54,15 @@ class UserProfileCreateView(generics.CreateAPIView):
             return Response({ 'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
 
 
-class CurrentUserProfileDetailView(APIView):
-    """Custom view retrieving the user profile for the currently authenticated user."""
+class CurrentUserProfileDetailView(generics.RetrieveAPIView):
+    """Retrieves the user profile for the currently authenticated user."""
     
     authentication_classes = (QuietBasicAuthentication, )
     permission_classes=(IsAuthenticated, )
     serializer_class = UserProfileSerializer
 
-    def get(self, request):
-        """Gets the user profile for the currently authenticated user."""
-       
-        user_profile = request.user.userprofile
-        return Response(self.serializer_class(user_profile).data)
-
+    def get_object(self):
+        return self.request.user.userprofile
 
 class UserProfileDetailView(generics.RetrieveAPIView):
     authentication_classes = (QuietBasicAuthentication, )

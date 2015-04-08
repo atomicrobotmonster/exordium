@@ -5,8 +5,11 @@ from django.contrib.auth import get_user_model
 
 CHARACTER_GENERATION_ATTRIBUTE_POINTS = 4
 
-#TODO having two serializers for UserProfile violates the DRY-principle
+# TODO having two serializers for UserProfile violates the DRY-principle
+
+
 class UserProfileUpsertSerializer(serializers.Serializer):
+
     """Upsert specific serialier to ensure Users and UserProfile are created together."""
 
     username = serializers.CharField(max_length=200)
@@ -15,7 +18,6 @@ class UserProfileUpsertSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=200)
     last_name = serializers.CharField(max_length=200)
 
-    
     def create(self, validated_data):
         """
         Atomically create User and UserProfile.
@@ -37,13 +39,17 @@ class UserProfileUpsertSerializer(serializers.Serializer):
 
         return user_profile
 
+
 class CharacterSummarySerializer(serializers.ModelSerializer):
+
     """Serializer for summaries of Characters"""
     class Meta:
         model = Character
         fields = ('id', 'name', )
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
+
     """
     Serializer for User Profile.
 
@@ -58,15 +64,19 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class CharacterSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Character
-        fields = ('id', 'name', 'user_profile', 'unassigned_attribute_points', 'strength', 'agility', 'mind', 'appeal')
+        fields = ('id', 'name', 'user_profile', 'unassigned_attribute_points',
+                  'strength', 'agility', 'mind', 'appeal')
 
-    def validate(self,data):
+    def validate(self, data):
         """
         Check the user isn't adding extra attributes points.
         """
-        total_points = data['unassigned_attribute_points'] + data['strength'] + data['agility'] + data['appeal'] + data['mind']
+        total_points = data['unassigned_attribute_points'] + \
+            data['strength'] + data['agility'] + data['appeal'] + data['mind']
         if total_points != CHARACTER_GENERATION_ATTRIBUTE_POINTS:
-            raise serializers.ValidationError("Character Generation Attriube Points must equal {0} ".format(CHARACTER_GENERATION_ATTRIBUTE_POINTS))
+            raise serializers.ValidationError("Character Generation Attriube Points must equal {0} ".format(
+                CHARACTER_GENERATION_ATTRIBUTE_POINTS))
         return data

@@ -4,12 +4,13 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, viewsets, status
-from django.http import Http404
 from django.db import transaction, IntegrityError
 from models import UserProfile, Character
 from serializers import UserProfileSerializer, UserProfileUpsertSerializer, CharacterSummarySerializer, CharacterSerializer
- 
+
+
 class QuietBasicAuthentication(BasicAuthentication):
+
     """
     We need to replace the standard "Basic ..." header with a custom scheme
     to prevent the browser unhelpfully prompting with a native dialog when
@@ -17,52 +18,63 @@ class QuietBasicAuthentication(BasicAuthentication):
 
     Thanks to http://richardtier.com/2014/03/06/110/ for the solution.
     """
+
     def authenticate_header(self, request):
         return 'xBasic realm="%s"' % self.www_authenticate_realm
 
+
 class IsUserForUserProfile(permissions.BasePermission):
+
     def has_object_permission(self, request, view, obj):
-        print("checking IsAuthenticatedUserForUserProfile permission for {} on {}").format(request.user, obj.user)
+        print("checking IsAuthenticatedUserForUserProfile permission for {} on {}").format(
+            request.user, obj.user)
 
         result = obj.user == request.user
         return result
 
-class IsUserForCharacter(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        print("checking IsAuthenticatedUserForCharacter permission for {} on {}").format(request.user, obj.user_profile.user)
 
-        return obj.user_profile.user == request.user        
+class IsUserForCharacter(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        print("checking IsAuthenticatedUserForCharacter permission for {} on {}").format(
+            request.user, obj.user_profile.user)
+
+        return obj.user_profile.user == request.user
+
 
 class UserProfileCreateView(generics.CreateAPIView):
+
     """Custom view for upserting User Profiles"""
-   
-    permission_classes=(AllowAny, )
+
+    permission_classes = (AllowAny, )
 
     def create(self, request,  *args, **kwargs):
         """Register a new user by atomically creating a User and associated UserProfile."""
-        
+
         request_serializer = UserProfileUpsertSerializer(data=request.data)
-        
+
         try:
             with transaction.atomic():
                 if request_serializer.is_valid():
                     request_serializer.save()
                     return Response(status=status.HTTP_201_CREATED)
-        
+
                 return Response(request_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError:
-            return Response({ 'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
+            return Response({'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
 
 
 class CurrentUserProfileDetailView(generics.RetrieveAPIView):
+
     """Retrieves the user profile for the currently authenticated user."""
-    
+
     authentication_classes = (QuietBasicAuthentication, )
-    permission_classes=(IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserProfileSerializer
 
     def get_object(self):
         return self.request.user.userprofile
+
 
 class UserProfileDetailView(generics.RetrieveAPIView):
     authentication_classes = (QuietBasicAuthentication, )
@@ -71,6 +83,7 @@ class UserProfileDetailView(generics.RetrieveAPIView):
     queryset = UserProfile.objects.all()
     lookup_field = 'id'
 
+
 class CharacterViewSet(viewsets.ModelViewSet):
     serializer_class = CharacterSerializer
     permission_classes = (IsAuthenticated, IsUserForCharacter, )
@@ -78,4 +91,4 @@ class CharacterViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Character.objects.filter(user_profile = user.userprofile)
+        return Character.objects.filter(user_profile=user.userprofile)

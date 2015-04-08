@@ -4,7 +4,9 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.conf import settings
 
+
 class UserProfile(models.Model):
+
     """Uses this character generator; has characters"""
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
@@ -15,18 +17,22 @@ class UserProfile(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 
+def validate_attribute(value):
+    """Validator for attribute value range"""
+    if value < -1 or value > 5:
+        raise ValidationError(
+            u'%s is outside range of valid attribute values (-1 to 5)' % value)
+
 
 def validate_attribute(value):
     """Validator for attribute value range"""
     if value < -1 or value > 5:
-        raise ValidationError(u'%s is outside range of valid attribute values (-1 to 5)' % value)
+        raise ValidationError(
+            u'%s is outside range of valid attribute values (-1 to 5)' % value)
 
-def validate_attribute(value):
-    """Validator for attribute value range"""
-    if value < -1 or value > 5:
-        raise ValidationError(u'%s is outside range of valid attribute values (-1 to 5)' % value)
 
 class Character(models.Model):
+
     """Barbarians of Lemuria Character"""
     name = models.CharField(max_length=200)
     user_profile = models.ForeignKey(UserProfile, related_name='characters')
@@ -38,5 +44,4 @@ class Character(models.Model):
     last_changed = models.DateTimeField(default=timezone.now())
 
     def __unicode__(self):
-    	return self.name
-
+        return self.name

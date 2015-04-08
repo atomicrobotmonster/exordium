@@ -6,8 +6,6 @@ from django.contrib.auth.models import User
 
 CHARACTER_GENERATION_ATTRIBUTE_POINTS = 4
 
-# TODO having two serializers for UserProfile violates the DRY-principle
-
 
 class UserProfileUpsertSerializer(serializers.Serializer):
 

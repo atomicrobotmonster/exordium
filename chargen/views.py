@@ -7,6 +7,11 @@ from rest_framework import generics, viewsets, status
 from django.db import transaction, IntegrityError
 from models import UserProfile, Character
 from serializers import UserProfileSerializer, UserProfileUpsertSerializer, CharacterSummarySerializer, CharacterSerializer
+import logging
+
+print 'logger: ' + __name__
+
+logger = logging.getLogger(__name__)
 
 
 class QuietBasicAuthentication(BasicAuthentication):
@@ -26,8 +31,8 @@ class QuietBasicAuthentication(BasicAuthentication):
 class IsUserForUserProfile(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        print("checking IsAuthenticatedUserForUserProfile permission for {} on {}").format(
-            request.user, obj.user)
+        logger.debug("checking IsAuthenticatedUserForUserProfile permission for {} on {}".format(
+            request.user, obj.user))
 
         result = obj.user == request.user
         return result
@@ -36,8 +41,8 @@ class IsUserForUserProfile(permissions.BasePermission):
 class IsUserForCharacter(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        print("checking IsAuthenticatedUserForCharacter permission for {} on {}").format(
-            request.user, obj.user_profile.user)
+        logger.debug("checking IsAuthenticatedUserForCharacter permission for {} on {}".format(
+            request.user, obj.user_profile.user))
 
         return obj.user_profile.user == request.user
 

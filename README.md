@@ -1,8 +1,8 @@
 # Exordium
 A character generator for the pen and paper RPG "Barbarians of Lemuria".
 
-Server built using Django 1.7 and Django REST Framework on Python 2.7.5.
-Client built using Angular.js 1.3.15 and Bootstrap 3.
+Server built using Django (1.7) and Django REST Framework (3.1.1) on Python 2.7.5.
+Client built using Angular.js (1.3.15) and Bootstrap 3.
 
 
 ## Installation

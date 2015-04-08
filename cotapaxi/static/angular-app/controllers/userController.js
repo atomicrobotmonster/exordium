@@ -68,8 +68,11 @@ cotopaxiUser.controller('RegistrationController', function ($http, $location, $s
   }
 
   $scope.submitRegistration = function() {
+    var username = $scope.registration.username
+    var password = $scope.registration.password
+
     $scope.registration.$save(function(data) {
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa($scope.registration.username + ':' + $scope.registration.password)
+      $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa(username + ':' + password)
       
       $scope.shared.userProfile = UserProfile.get(function(data) {
         $scope.shared.authenticated = true

@@ -61,7 +61,7 @@ class UserProfileCreateView(generics.CreateAPIView):
         with transaction.atomic():
             if request_serializer.is_valid():
                 user_profile = request_serializer.save()
-                return Response(status=status.HTTP_201_CREATED)
+                return Response(UserProfileSerializer(user_profile).data, status=status.HTTP_201_CREATED)
 
             return Response(request_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

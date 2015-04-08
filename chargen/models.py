@@ -2,12 +2,30 @@ from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.conf import settings
 
+
+class UserProfileManager(models.Manager):
+    def create(self, username, password, email, first_name, last_name):
+        user = get_user_model()()
+        user.username = username
+        user.set_password(password)
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        user_profile = UserProfile()
+        user_profile.user = user
+        user_profile.save()
+
+        return user_profile
 
 class UserProfile(models.Model):
 
     """Uses this character generator; has characters"""
+    objects = UserProfileManager()
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     def __unicode__(self):

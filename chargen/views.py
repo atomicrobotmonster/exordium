@@ -33,23 +33,23 @@ class IsUserForCharacter(permissions.BasePermission):
 
         return obj.user_profile.user == request.user        
 
-class UserProfileCreateView(APIView):
+class UserProfileCreateView(generics.CreateAPIView):
     """Custom view for upserting User Profiles"""
    
     permission_classes=(AllowAny, )
 
-    def post(self, request):
+    def create(self, request,  *args, **kwargs):
         """Register a new user by atomically creating a User and associated UserProfile."""
         
-        serializer = UserProfileUpsertSerializer(data=request.data)
+        request_serializer = UserProfileUpsertSerializer(data=request.data)
         
         try:
             with transaction.atomic():
-                if serializer.is_valid():
-                    serializer.save()
+                if request_serializer.is_valid():
+                    request_serializer.save()
                     return Response(status=status.HTTP_201_CREATED)
         
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(request_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except IntegrityError:
             return Response({ 'detail': 'User already exists.'}, status=status.HTTP_409_CONFLICT)
 

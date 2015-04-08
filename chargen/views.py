@@ -3,7 +3,7 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics, status
+from rest_framework import generics, viewsets, status
 from django.http import Http404
 from django.db import transaction, IntegrityError
 from models import UserProfile, Character
@@ -90,7 +90,7 @@ class UserProfileDetailView(APIView):
         serializer = UserProfileSerializer(user_profile)
         return Response(serializer.data)
 
-class CharacterDetailView(generics.RetrieveUpdateDestroyAPIView):
+class CharacterViewSet(viewsets.ModelViewSet):
     serializer_class = CharacterSerializer
     permission_classes = (IsAuthenticated, IsUserForCharacter, )
     authentication_classes = (QuietBasicAuthentication, )
@@ -98,13 +98,4 @@ class CharacterDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return Character.objects.filter(user_profile = user.userprofile)
-
-
-class CharacterListView(generics.ListCreateAPIView):
-    authentication_classes = (QuietBasicAuthentication, )
-    permission_classes = (IsAuthenticated, IsUserForCharacter, )
-    serializer_class = CharacterSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Character.objects.filter(user_profile = user.userprofile)
+        

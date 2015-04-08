@@ -65,6 +65,7 @@ input.spinner-field {
 	max-width: 150px;
 	max-height: 190px;
 	min-width: 85px;
+	min-height: 150px;
 	font-size: 72px;
 	text-align: center;
 	color: white;

@@ -35,3 +35,4 @@ Character creation features:
 
 * Profession selection
 * Equipment selection
+* Character portrait upload with resize/clipping as necessary

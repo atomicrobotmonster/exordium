@@ -14,7 +14,42 @@ cotopaxiUser.factory('Character', function($resource) {
   }) 
 })
 
-cotopaxiUser.controller('AppController', function ($http, $location, $scope) {
+cotopaxiUser.service('UserAuthService', function() {
+  var service = this;  
+  var credentials = null
+
+  service.getUserCredentials = function() {
+    return credentials;
+  }
+
+  service.registerCredentials = function(username, password) {
+    credentials = {
+      'username': username,
+      'password': password }
+    console.log('Credentials registered.')
+  }
+
+  service.clearCredentials = function() {
+    credentials = null
+    console.log('Credentials cleared.')
+  }
+})
+
+cotopaxiUser.service('APIAuthInterceptor', function($rootScope, UserAuthService) {
+  var service = this;
+
+  service.request = function(config) { 
+      var credentials = UserAuthService.getUserCredentials()
+
+      if (credentials) {
+        console.log('Credentials found.')
+        config.headers.Authorization = 'Basic ' + btoa(credentials.username  + ':' + credentials.password )
+      }
+      return config;
+  }
+})
+
+cotopaxiUser.controller('AppController', function ($http, $location, $scope, UserAuthService) {
   $scope.isActive = function (viewLocation) {
     var active = (viewLocation === $location.path());
     return active;
@@ -23,7 +58,8 @@ cotopaxiUser.controller('AppController', function ($http, $location, $scope) {
   $scope.logout = function() {
     $scope.shared.authenticated = false
     $scope.shared.userProfile = null
-    delete $http.defaults.headers.common['Authorization']
+    
+    UserAuthService.clearCredentials()
 
     $location.path('/')
   }
@@ -31,7 +67,7 @@ cotopaxiUser.controller('AppController', function ($http, $location, $scope) {
   $scope.shared = { userProfile: null, authenticated: false}
 })
 
-cotopaxiUser.controller('LoginController', function ($http, $location, $scope, UserProfile) {
+cotopaxiUser.controller('LoginController', function ($http, $location, $scope, UserProfile, UserAuthService) {
 
   function handleHttpError(error) {
     if (error.status == 401) {    
@@ -42,10 +78,9 @@ cotopaxiUser.controller('LoginController', function ($http, $location, $scope, U
     }
   }
 
-  $scope.login = function() {
-    /* FIXME crude, will apply to all HTTP requests */
-    $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa($scope.authentication.username + ':' + $scope.authentication.password)
-    
+  $scope.login = function() {    
+    UserAuthService.registerCredentials($scope.authentication.username, $scope.authentication.password)
+
     $scope.shared.userProfile = UserProfile.get(function(data) {
       $scope.shared.authenticated = true
       $location.path('/')
@@ -56,7 +91,7 @@ cotopaxiUser.controller('LoginController', function ($http, $location, $scope, U
   $scope.shared.authenticated = false
 })
 
-cotopaxiUser.controller('RegistrationController', function ($http, $location, $scope, Registration, UserProfile) {
+cotopaxiUser.controller('RegistrationController', function ($http, $location, $scope, Registration, UserProfile, UserAuthService) {
 
   function handleHttpError(error) {
     if (error.status == 401) {    
@@ -72,7 +107,7 @@ cotopaxiUser.controller('RegistrationController', function ($http, $location, $s
     var password = $scope.registration.password
 
     $scope.registration.$save(function(data) {
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa(username + ':' + password)
+      UserAuthService.registerCredentials(username, password)
       
       $scope.shared.userProfile = UserProfile.get(function(data) {
         $scope.shared.authenticated = true

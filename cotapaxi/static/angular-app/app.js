@@ -1,7 +1,7 @@
 var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute', 'cotopaxiUser']);
 
-cotopaxiApp.config(['$routeProvider',
-  function ($routeProvider) {
+cotopaxiApp.config(['$routeProvider', '$httpProvider',
+  function ($routeProvider, $httpProvider) {
     $routeProvider.
       when('/', {
         templateUrl: 'static/angular-app/views/main.html',
@@ -26,5 +26,7 @@ cotopaxiApp.config(['$routeProvider',
       otherwise({
         redirectTo: '/'
       })
+ 
+      $httpProvider.interceptors.push('APIAuthInterceptor')
   }
 ])

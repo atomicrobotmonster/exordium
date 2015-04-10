@@ -1,4 +1,6 @@
-var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute', 'cotopaxiUser']);
+'use strict';
+
+var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute', 'ngResource']);
 
 cotopaxiApp.config(['$routeProvider', '$httpProvider',
   function ($routeProvider, $httpProvider) {

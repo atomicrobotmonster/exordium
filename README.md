@@ -19,12 +19,11 @@ Client built using Angular.js (1.3.15) and Bootstrap 3.
 ## TODO
 Lots of angular cleanup:
 
-* use HTTP Interceptors to handle auth instead of universally setting headers
 * dirty checking on character editor form
 * build selector widgets using angular directives
 * using resolve in route to prevent access to routes requiring auth
 * overflow: scroll on character selector
-* better angular source organization
+* handle HTTP errors
 * grunt based build
 
 API improvements:

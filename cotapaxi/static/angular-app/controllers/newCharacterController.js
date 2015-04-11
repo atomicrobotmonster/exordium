@@ -29,12 +29,6 @@ angular.module('cotopaxiApp').controller('NewCharacterController', function ($ht
     })      
   }
 
-  //TODO lame... should be able to handle this in route...
-  if (!$scope.shared.authenticated) {
-    $location.path("/login")
-    return
-  }
-
   $scope.showNewCharacterLink = true
   $scope.badAttributePoints = false
   $scope.currentCharacter = new Character

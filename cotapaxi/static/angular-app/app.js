@@ -32,3 +32,25 @@ cotopaxiApp.config(['$routeProvider', '$httpProvider',
       $httpProvider.interceptors.push('APIAuthInterceptor')
   }
 ])
+
+cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      var openPaths = [
+        '/',
+        '',
+        '/sign-up',
+        '/login-']
+
+      var authenticated = UserAuthService.isAuthenticated()
+      var openPath = openPaths.indexOf(next.originalPath) > -1
+
+      console.log((authenticated ? 'Authenticated' : 'Unauthenticated') + ' user is attempting to navigate to ' + (openPath ? 'open' : 'protected') +' URL: ' + next.originalPath)
+
+      if (!authenticated && !openPath) {
+        console.log('Redirected unauthenticated user to login.')
+        $location.path('/login');
+        return
+      }
+    })
+
+})

@@ -21,7 +21,7 @@ Lots of angular cleanup:
 
 * dirty checking on character editor form
 * build selector widgets using angular directives
-* using resolve in route to prevent access to routes requiring auth
+* store/retrieve credentials in browser localStorage
 * overflow: scroll on character selector
 * handle HTTP errors
 * grunt based build

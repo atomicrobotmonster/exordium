@@ -8,6 +8,10 @@ angular.module('cotopaxiApp').service('UserAuthService', function() {
     return credentials;
   }
 
+  service.isAuthenticated = function() {
+    return credentials != null;
+  }
+
   service.registerCredentials = function(username, password) {
     credentials = {
       'username': username,

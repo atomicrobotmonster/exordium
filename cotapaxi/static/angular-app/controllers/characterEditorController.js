@@ -42,13 +42,6 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     })
   }
 
-  //TODO lame... should be able to handle this in route...
-  if (!$scope.shared.authenticated && $location.path().indexOf("/character") != -1) {
-    $location.path("/login")
-    return
-  }
-
-
   $scope.showNewCharacterLink = false
   
   var idToSelect = null

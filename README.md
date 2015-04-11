@@ -4,7 +4,6 @@ A character generator for the pen and paper RPG "Barbarians of Lemuria".
 Server built using Django (1.7) and Django REST Framework (3.1.1) on Python 2.7.5.
 Client built using Angular.js (1.3.15) and Bootstrap 3.
 
-
 ## Installation
 1. pip install django
 2. pip install djangorestframework
@@ -21,7 +20,6 @@ Lots of angular cleanup:
 
 * dirty checking on character editor form
 * build selector widgets using angular directives
-* store/retrieve credentials in browser localStorage
 * overflow: scroll on character selector
 * handle HTTP errors
 * grunt based build

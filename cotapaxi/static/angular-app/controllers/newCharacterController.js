@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cotopaxiApp').controller('NewCharacterController', function ($http, $location, $scope, UserProfile, Character) {
+angular.module('cotopaxiApp').controller('NewCharacterController', function ($http, $location, $rootScope, $scope, currentUserProfile, Character) {
   $scope.isEditing = function (characterId) {
     return characterId === $scope.currentCharacter.id;
   }
@@ -23,11 +23,16 @@ angular.module('cotopaxiApp').controller('NewCharacterController', function ($ht
     }
 
     $scope.currentCharacter.$save(function(savedCharacter) {
-      $scope.shared.userProfile = UserProfile.get(function(userProfile) {
-        $location.path("/character/" + savedCharacter.id)
-      })
+      $location.path("/character/" + savedCharacter.id)
     })      
   }
+
+  //TOOD userProfile can probably be removed
+  $rootScope.shared = {
+    userProfile: currentUserProfile,
+    authenticated: true
+  }
+    
 
   $scope.showNewCharacterLink = true
   $scope.badAttributePoints = false
@@ -39,6 +44,6 @@ angular.module('cotopaxiApp').controller('NewCharacterController', function ($ht
   $scope.currentCharacter.agility = 0
   $scope.currentCharacter.mind = 0
   $scope.currentCharacter.appeal = 0
-  $scope.currentCharacter.user_profile = $scope.shared.userProfile.id
+  $scope.currentCharacter.user_profile = currentUserProfile.id
 })
 

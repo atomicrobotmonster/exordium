@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('cotopaxiApp').controller('AppController', function ($http, $location, $scope, UserAuthService) {
+var appController = angular.module('cotopaxiApp').controller('AppController', function ($http, $location, $rootScope, $scope, UserAuthService, UserProfile) {
   $scope.isActive = function (viewLocation) {
     var active = (viewLocation === $location.path());
     return active;
@@ -15,5 +15,18 @@ angular.module('cotopaxiApp').controller('AppController', function ($http, $loca
     $location.path('/')
   }
 
-  $scope.shared = { userProfile: null, authenticated: false}
+  /* we need to declare shared in this parent controller first 
+    or the controllers with child scopes will have their own values */
+  $rootScope.shared = {
+      authenticated: false,
+      userProfile: null
+  }
+
 })
+
+appController.currentUserProfile = function(UserAuthService, UserProfile) {
+  console.log('RESOLVING CURRENT USER PROFILE')
+  if (UserAuthService.isAuthenticated()) {
+    return UserProfile.get().$promise
+  }
+}

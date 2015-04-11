@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('cotopaxiApp').controller('CharacterEditorController', function ($http, $location, $routeParams, $scope, UserProfile, Character) {
+angular.module('cotopaxiApp').controller('CharacterEditorController', function ($http, $location, $routeParams, $rootScope, $scope, currentUserProfile, Character) {
   $scope.isActive = function (viewLocation) {
     var active = (viewLocation === $location.path());
     return active;
@@ -28,31 +28,32 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     }
 
     $scope.currentCharacter.$update(function(data) {
-      $scope.shared.userProfile = UserProfile.get(function(userProfile) {
-        $location.path("/character/" + $scope.currentCharacter.id)
-      })
+      $location.path("/character/" + $scope.currentCharacter.id)
     })
   }
 
   $scope.deleteCharacter = function(id) {
     $scope.currentCharacter.$remove({id: id}, function(data) {
-      $scope.shared.userProfile = UserProfile.get(function(userProfile) {
-        $location.path("/character")
-      })
+      $location.path("/character")
     })
   }
 
+  //TOOD userProfile can probably be removed
+  $rootScope.shared = {
+    userProfile: currentUserProfile,
+    authenticated: true
+  }
   $scope.showNewCharacterLink = false
   
   var idToSelect = null
-  if ($scope.shared.userProfile) {  
-    if ($scope.shared.userProfile.characters.length == 0) {
+  if (currentUserProfile) {  
+    if (currentUserProfile.characters.length == 0) {
       $location.path('/new-character')
       return
     } else if ($routeParams.characterId) {
       idToSelect = $routeParams.characterId
     } else {
-      idToSelect = $scope.shared.userProfile.characters.sort(function(a, b) {
+      idToSelect = currentUserProfile.characters.sort(function(a, b) {
         var x = a['name']; var y = b['name']
         return ((x < y) ? -1 : ((x > y) ? 1 : 0))
       })[0].id

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('cotopaxiApp').controller('LoginController', function ($http, $location, $scope, UserProfile, UserAuthService) {
+angular.module('cotopaxiApp').controller('LoginController', function ($http, $location, $rootScope, $scope, UserProfile, UserAuthService) {
 
   function handleHttpError(error) {
     if (error.status == 401) {    
@@ -14,12 +14,12 @@ angular.module('cotopaxiApp').controller('LoginController', function ($http, $lo
   $scope.login = function() {    
     UserAuthService.registerCredentials($scope.authentication.username, $scope.authentication.password)
 
-    $scope.shared.userProfile = UserProfile.get(function(data) {
-      $scope.shared.authenticated = true
+    $rootScope.shared.userProfile = UserProfile.get(function(data) {
+      $rootScope.shared.authenticated = true
       $location.path('/')
     }, handleHttpError)
   }
 
   $scope.badCredentials = false;
-  $scope.shared.authenticated = false
+  $rootScope.shared.authenticated = false
 })

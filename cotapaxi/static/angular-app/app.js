@@ -2,20 +2,29 @@
 
 var cotopaxiApp = angular.module('cotopaxiApp', ['ngRoute', 'ngResource']);
 
-cotopaxiApp.config(['$routeProvider', '$httpProvider',
+cotopaxiApp.config(['$routeProvider', '$httpProvider', 
   function ($routeProvider, $httpProvider) {
     $routeProvider.
       when('/', {
         templateUrl: 'static/angular-app/views/main.html',
-        controller:  'CharacterEditorController'
+        controller:  'CharacterEditorController',
+        resolve: {
+          currentUserProfile: appController.currentUserProfile
+        }
       }).
       when('/new-character', {
         templateUrl: 'static/angular-app/views/main.html',
-        controller:  'NewCharacterController'
+        controller:  'NewCharacterController',
+        resolve: {
+          currentUserProfile: appController.currentUserProfile
+        }
       }).
       when('/character/:characterId', {
         templateUrl: 'static/angular-app/views/main.html',
-        controller:  'CharacterEditorController'
+        controller:  'CharacterEditorController',
+        resolve: {
+          currentUserProfile: appController.currentUserProfile
+        }
       }).
       when('/sign-up', {
         templateUrl: 'static/angular-app/views/signup.html',
@@ -34,6 +43,9 @@ cotopaxiApp.config(['$routeProvider', '$httpProvider',
 ])
 
 cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
+
+  UserAuthService.loadStoredCredentials()
+
   $rootScope.$on('$routeChangeStart', function(event, next, current) {
       var openPaths = [
         '/',
@@ -47,7 +59,7 @@ cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
       console.log((authenticated ? 'Authenticated' : 'Unauthenticated') + ' user is attempting to navigate to ' + (openPath ? 'open' : 'protected') +' URL: ' + next.originalPath)
 
       if (!authenticated && !openPath) {
-        console.log('Redirected unauthenticated user to login.')
+        console.log('Redirecting unauthenticated user to login.')
         $location.path('/login');
         return
       }

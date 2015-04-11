@@ -14,16 +14,8 @@ angular.module('cotopaxiApp').controller('NewCharacterController', function ($ht
     }
   }
 
-  function totalCharacterPoints(character) {
-    return character.unassigned_attribute_points 
-      + character.strength 
-      + character.agility
-      + character.mind
-      + character.appeal
-  }
-
   $scope.saveCharacter = function() {
-    if (totalCharacterPoints($scope.currentCharacter) != 4) {
+    if ($scope.currentCharacter.totalCharacterPoints() != 4) {
       $scope.badAttributePoints = true
       return
     } else {

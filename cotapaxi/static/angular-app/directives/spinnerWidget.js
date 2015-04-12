@@ -37,6 +37,14 @@ angular.module('cotopaxiApp').directive('spinnerWidget', function() {
 
          elem.find('button.increment').bind('click',onIncrement)
          elem.find('button.decrement').bind('click',onDecrement)
+         
+         elem.on('mouseenter', function() { 
+         	elem.addClass('active-spinner');
+         })
+
+         elem.on('mouseleave', function() { 
+         	elem.removeClass('active-spinner');
+         })
       }
 	}
 })

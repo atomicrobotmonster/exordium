@@ -61,11 +61,13 @@ form .bg-danger {
 
 input.spinner-field {
 	width: 90%;
-	height: 160%;
 	max-width: 160px;
-	max-height: 190px;
 	min-width: 85px;
-	min-height: 160px;
+	
+	height: 157%;
+	min-height: 157px;
+	max-height: 157px;
+	
 	font-size: 72px;
 	text-align: center;
 	color: white;
@@ -85,11 +87,13 @@ label.spinner-label {
 
 .spinner-widget {
 	width: 90%;
-	height: 160px;
-	max-width: 160px;
-	max-height: 150px;
 	min-width: 85px;
-	min-height: 160px;
+	max-width: 160px;
+	
+	height: 156px;
+	min-height: 156px;
+	max-height: 156px;
+
 	border: 1px solid rgb(193,193,193);
 	border-radius: 3px;
 }
@@ -113,12 +117,14 @@ label.spinner-label {
 
 .spinner-widget button {
 	width: 100%;
+	color: rgb(240,240,240);
 	background-color: rgba(10, 100 ,10, .25);
 	border: 0;
 }
 
 .active-spinner button {
-	background-color: rgba(10, 255 ,10, .6);	
+	background-color: rgba(10, 100 ,10, .5);
+	color: white;	
 }
 
 .spinner-widget button.increment {

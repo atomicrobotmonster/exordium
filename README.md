@@ -18,7 +18,6 @@ Client built using Angular.js (1.3.15) and Bootstrap 3.
 ## TODO
 Angular cleanup:
 
-* integrate custom attribute widgets with form dirty checking
 * overflow: scroll on character selector
 * handle HTTP errors
 * grunt based build

@@ -171,3 +171,52 @@ label.spinner-label {
 	font-size: 32px;
 }
 
+div.character-editor-dirty-modal {
+    background-image: url('ozymandias.jpg');
+    background-size: cover;
+}
+
+div.character-editor-dirty-message {
+    background-color: rgba(65,65,75,0.6);
+    margin: 0;
+}
+
+div.character-editor-dirty-buttons {
+    background-color: rgba(40,40,50,0.6);
+    margin: 0;
+}
+
+div.character-editor-dirty-message p {
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+    text-shadow: 2px 2px 2px #4f4f4f;
+}
+
+div.character-editor-dirty-buttons .btn {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+div.character-editor-dirty-buttons .btn-success {
+    margin-right: 30px;
+}
+
+div.character-editor-dirty-buttons .btn-warning {
+    margin-left: 30px;
+}
+
+.btn-primary {
+	background-color: rgba(60,60,220,0.6);
+	border-color: rgba(60,60,220,0.6);
+}
+
+.btn-warning {
+	background-color: rgba(200,100,0,0.6);
+	border-color: rgba(200,100,0,0.6);
+}
+
+.btn-success {
+	background-color: rgba(10,100,10,0.6);
+	border-color: rgba(10,100,10,0.6);
+}

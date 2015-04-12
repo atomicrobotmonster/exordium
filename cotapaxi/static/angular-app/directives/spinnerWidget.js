@@ -14,17 +14,15 @@ angular.module('cotopaxiApp').directive('spinnerWidget', function() {
       	//render the value when the ng-model changes
         ngModelController.$render = function() {
           elem.find('span.spinner-widget-value').text(ngModelController.$viewValue)
-        }
-
-        var setValue = function(newValue) {
-          ngModelController.$setViewValue(newValue)
-
-          if (newValue < 0) { 
+          if (ngModelController.$viewValue < 0) { 
             elem.addClass('spinner-widget-negative-value')
           } else {
           	elem.removeClass('spinner-widget-negative-value')
           }
+        }
 
+        var setValue = function(newValue) {
+          ngModelController.$setViewValue(newValue)
           ngModelController.$render()
         }
 

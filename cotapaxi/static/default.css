@@ -114,6 +114,10 @@ label.spinner-label {
      	1px 1px 0 #000;
 }
 
+.spinner-widget-negative-value span.spinner-widget-value {
+	color: rgb(255,150,50);
+}
+
 
 .spinner-widget button {
 	width: 100%;

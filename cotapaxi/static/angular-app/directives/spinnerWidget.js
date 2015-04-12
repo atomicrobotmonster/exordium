@@ -18,6 +18,13 @@ angular.module('cotopaxiApp').directive('spinnerWidget', function() {
 
         var setValue = function(newValue) {
           ngModelController.$setViewValue(newValue)
+
+          if (newValue < 0) { 
+            elem.addClass('spinner-widget-negative-value')
+          } else {
+          	elem.removeClass('spinner-widget-negative-value')
+          }
+
           ngModelController.$render()
         }
 

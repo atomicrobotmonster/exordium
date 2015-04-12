@@ -49,7 +49,7 @@ angular.module('cotopaxiApp').controller('NewCharacterController', function ($ht
   $scope.badAttributePoints = false
   $scope.currentCharacter = new Character
   $scope.currentCharacter.id = null
-  $scope.currentCharacter.name = 'New Character'
+  $scope.currentCharacter.name = ''
   $scope.currentCharacter.unassigned_attribute_points = 4
   $scope.currentCharacter.strength = 0
   $scope.currentCharacter.agility = 0

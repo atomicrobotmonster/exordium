@@ -12,6 +12,17 @@ angular.module('cotopaxiApp').controller('RegistrationController', function ($ht
   }
 
   $scope.submitRegistration = function() {
+    var username = $scope.registration.username
+    var password = $scope.registration.password
+
+    $scope.registration.$save(function(data) {
+      UserAuthService.registerCredentials(username, password)
+      
+      $rootScope.shared.userProfile = UserProfile.get(function(data) {
+        $rootScope.shared.authenticated = true
+        $location.path('/')        
+      })
+    })
   }
 
   $scope.registration = new Registration

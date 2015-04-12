@@ -51,15 +51,16 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
   }
 
 
-  //TOOD userProfile can probably be removed
-  $rootScope.shared = {
-    userProfile: currentUserProfile,
-    authenticated: true
-  }
   $scope.showNewCharacterLink = false
   
   var idToSelect = null
   if (currentUserProfile) {  
+    //TOOD userProfile can probably be removed
+    $rootScope.shared = {
+      userProfile: currentUserProfile,
+      authenticated: true
+    }
+
     if (currentUserProfile.characters.length == 0) {
       $location.path('/new-character')
       return
@@ -75,5 +76,10 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     $scope.showNewCharacterLink = false
     $scope.badAttributePoints = false
     $scope.currentCharacter = Character.get({ 'id': idToSelect })
+  } else {
+    $rootScope.shared = {
+      userProfile: null,
+      authenticated: false
+    }
   }
 })

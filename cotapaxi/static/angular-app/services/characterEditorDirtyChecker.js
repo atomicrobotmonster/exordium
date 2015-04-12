@@ -1,6 +1,6 @@
 'use strict'
 
-cotopaxiApp.factory('CharacterEditorDirtyChecker', function($rootScope, $location, $modal) { 
+cotopaxiApp.factory('CharacterEditorDirtyChecker', function($rootScope, $window, $modal) { 
 
     var showConfirmationModal = function() {
       return $modal.open({
@@ -15,8 +15,8 @@ cotopaxiApp.factory('CharacterEditorDirtyChecker', function($rootScope, $locatio
 		  if($scope.characterForm.$dirty) { 
 		  	showConfirmationModal().result.then(function() {
 		      removeListener()
-		      console.log('User confirms losing changes and wants to navigate to ' + $location.url(next).hash() + '.')
-              $location.path($location.url(next).hash());
+		      console.log('User confirms losing changes and wants to navigate to ' + next + '.')
+          $window.location.href = next
 		  	})
   
             event.preventDefault()

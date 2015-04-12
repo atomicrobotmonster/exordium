@@ -34,6 +34,10 @@ cotopaxiApp.config(['$routeProvider', '$httpProvider',
         templateUrl: 'static/angular-app/views/login.html',
         controller:  'LoginController'
       }).
+      when('/logout', {
+        templateUrl: 'static/angular-app/views/main.html',
+        controller:  'LogoutController'
+      }).
       otherwise({
         redirectTo: '/'
       })
@@ -53,7 +57,7 @@ cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
         '/',
         '',
         '/sign-up',
-        '/login-']
+        '/login']
 
       var authenticated = UserAuthService.isAuthenticated()
       var openPath = openPaths.indexOf(next.originalPath) > -1

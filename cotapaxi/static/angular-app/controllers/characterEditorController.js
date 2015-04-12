@@ -55,9 +55,11 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
   
   var idToSelect = null
   if (currentUserProfile) {  
+
+    $scope.characters = currentUserProfile.characters
+
     //TOOD userProfile can probably be removed
     $rootScope.shared = {
-      userProfile: currentUserProfile,
       authenticated: true
     }
 
@@ -78,7 +80,6 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     $scope.currentCharacter = Character.get({ 'id': idToSelect })
   } else {
     $rootScope.shared = {
-      userProfile: null,
       authenticated: false
     }
   }

@@ -14,7 +14,7 @@ angular.module('cotopaxiApp').controller('LoginController', function ($http, $lo
   $scope.login = function() {    
     UserAuthService.registerCredentials($scope.authentication.username, $scope.authentication.password)
 
-    $rootScope.shared.userProfile = UserProfile.get(function(data) {
+    UserProfile.get(function(data) {
       $rootScope.shared.authenticated = true
       $location.path('/')
     }, handleHttpError)

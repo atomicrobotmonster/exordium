@@ -7,8 +7,9 @@ var appController = angular.module('cotopaxiApp').controller('AppController', fu
   }
 
   $scope.logout = function() {
-    $scope.shared.authenticated = false
-    $scope.shared.userProfile = null
+    console.log('Logging out ' + UserAuthService.getUserCredentials().username + '.')
+
+    $rootScope.shared.authenticated = false
     
     UserAuthService.clearCredentials()
 
@@ -18,14 +19,16 @@ var appController = angular.module('cotopaxiApp').controller('AppController', fu
   /* we need to declare shared in this parent controller first 
     or the controllers with child scopes will have their own values */
   $rootScope.shared = {
-      authenticated: false,
-      userProfile: null
+      authenticated: false
   }
 
 })
 
-appController.currentUserProfile = function(UserAuthService, UserProfile) {
+appController.currentUserProfile = function($rootScope, UserAuthService, UserProfile) {
   console.log('RESOLVING CURRENT USER PROFILE')
+
+  $rootScope.shared.authenticated = UserAuthService.isAuthenticated()
+
   if (UserAuthService.isAuthenticated()) {
     return UserProfile.get().$promise
   }

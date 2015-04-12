@@ -47,6 +47,8 @@ cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
   UserAuthService.loadStoredCredentials()
 
   $rootScope.$on('$routeChangeStart', function(event, next, current) {
+
+      if (next.originalPath) {
       var openPaths = [
         '/',
         '',
@@ -63,6 +65,7 @@ cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
         $location.path('/login');
         return
       }
-    })
+    }
+  })
 
 })

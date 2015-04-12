@@ -37,14 +37,9 @@ angular.module('cotopaxiApp').controller('NewCharacterController', function ($ht
     $scope.currentCharacter.$save(function(savedCharacter) {
       $location.path("/character/" + savedCharacter.id)
     })      
-  }
+  }    
 
-  //TOOD userProfile can probably be removed
-  $rootScope.shared = {
-    userProfile: currentUserProfile,
-    authenticated: true
-  }
-    
+  $scope.characters = currentUserProfile.characters
 
   $scope.showNewCharacterLink = true
   $scope.badAttributePoints = false

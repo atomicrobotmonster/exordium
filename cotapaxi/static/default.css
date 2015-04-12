@@ -61,11 +61,11 @@ form .bg-danger {
 
 input.spinner-field {
 	width: 90%;
-	height: 100%;
-	max-width: 150px;
+	height: 160%;
+	max-width: 160px;
 	max-height: 190px;
 	min-width: 85px;
-	min-height: 150px;
+	min-height: 160px;
 	font-size: 72px;
 	text-align: center;
 	color: white;
@@ -81,22 +81,72 @@ label.spinner-label {
 	width: 90%;
 }
 
-#strength-field {
+/* new style fields below */
+
+.spinner-widget {
+	width: 90%;
+	height: 160px;
+	max-width: 160px;
+	max-height: 150px;
+	min-width: 85px;
+	min-height: 160px;
+	border: 1px solid rgb(193,193,193);
+	border-radius: 3px;
+}
+
+.spinner-widget div.spinner-widget-value-container {
+	width: 100%;
+	text-align: center;
+}
+
+.spinner-widget span.spinner-widget-value {
+	width: 100%;
+	font-size: 72px;
+	color: white;
+	text-shadow:
+   		1px 1px 0 #000,  
+    	1px -1px 0 #000,
+    	-1px 1px 0 #000,
+     	1px 1px 0 #000;
+}
+
+
+.spinner-widget button {
+	width: 100%;
+	background-color: rgba(10, 100 ,10, .25);
+	border: 0;
+}
+
+.active-spinner button {
+	background-color: rgba(10, 255 ,10, .6);	
+}
+
+.spinner-widget button.increment {
+	border-bottom: 1px solid rgb(193,193,193);
+	border-radius: 3px 3px 0px 0px;
+}
+
+.spinner-widget button.decrement {
+	border-top: 1px solid rgb(193,193,193);
+	border-radius: 0px 0px 3px 3px;
+}
+
+#strength-spinner div.spinner-widget {
 	background-image: url('strength-150.jpg');
 	background-size: cover;
 }
 
-#agility-field {
+#agility-spinner div.spinner-widget {
 	background-image: url('agility-150.jpg');
 	background-size: cover;
 }
 
-#mind-field {
+#mind-spinner div.spinner-widget {
 	background-image: url('mind-150.jpg');	
 	background-size: cover;
 }
 
-#appeal-field {
+#appeal-spinner div.spinner-widget {
 	background-image: url('appeal-150.jpg');
 	background-size: cover;
 }

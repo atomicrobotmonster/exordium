@@ -20,8 +20,6 @@ Client built using Angular.js (1.3.15) and Bootstrap 3.
 Lots of angular cleanup:
 
 * dirty checking on character editor form
-* build selector widgets using angular directives
-* store/retrieve credentials in browser localStorage
 * overflow: scroll on character selector
 * handle HTTP errors
 * grunt based build

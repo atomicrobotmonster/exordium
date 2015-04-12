@@ -38,6 +38,19 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     })
   }
 
+  $scope.increment = function(attributeName) {
+    console.log('Incrementing ' + attributeName)
+
+    $scope.currentCharacter.incrementAttribute(attributeName)
+  }
+
+  $scope.decrement = function(attributeName) {
+    console.log('Decrementing ' + attributeName)
+
+    $scope.currentCharacter.decrementAttribute(attributeName)
+  }
+
+
   //TOOD userProfile can probably be removed
   $rootScope.shared = {
     userProfile: currentUserProfile,

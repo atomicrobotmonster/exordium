@@ -26,29 +26,28 @@
                 <div id="attribute-row" class="row">
                   <div class="form-group col-sm-2">
                     <label for="unassigned-field" class="control-label spinner-label">Unassigned</label>
-                    <input type="number" min="0" max="5" class="form-control spinner-field" id="unassigned-field" required ng-model="currentCharacter.unassigned_attribute_points">
+                    <input type="number" min="0" max="5" class="form-control spinner-field" id="unassigned-field" readonly ng-model="currentCharacter.unassigned_attribute_points">
                   </div>
                   <div id="attribute-equals" class="col-sm-1">
                     <p><span class="glyphicon glyphicon-resize-horizontal"></span></p>
                   </div>
                   <div class="form-group col-sm-2">
-                    <label for="strength-field" class="control-label spinner-label">Strength</label>
-                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="strength-field" required ng-model="currentCharacter.strength">
+                    <label class ="control-label spinner-label">Strength</label>
+                    <spinner-widget id="strength-spinner" value="{{currentCharacter.strength}}" increment='increment("strength")' decrement='decrement("strength")'></spinner-widget>
                   </div>
                   <div class="form-group col-sm-2">
-                    <label for="agility-field" class="control-label spinner-label">Agility</label>
-                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="agility-field" required ng-model="currentCharacter.agility">
+                    <label class ="control-label spinner-label">Agility</label>
+                    <spinner-widget id="agility-spinner" value="{{currentCharacter.agility}}" increment='increment("agility")' decrement='decrement("agility")'></spinner-widget>
                   </div>
                   <div class="form-group col-sm-2">
-                    <label for="mind-field" class="control-label spinner-label">Mind</label>
-                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="mind-field" required ng-model="currentCharacter.mind">
+                    <label class ="control-label spinner-label">Mind</label>
+                    <spinner-widget id="mind-spinner" value="{{currentCharacter.mind}}" increment='increment("mind")' decrement='decrement("mind")'></spinner-widget>
                   </div>
                   <div class="form-group col-sm-2">
-                    <label for="appeal-field" class="control-label spinner-label">Appeal</label>
-                    <input type="number" min="-1" max="4" class="form-control spinner-field" id="appeal-field" required ng-model="currentCharacter.appeal">
-                  </div>
-                </div> <!-- end attribute row -->
-                
+                    <label class ="control-label spinner-label">Appeal</label>
+                    <spinner-widget id="appeal-spinner" value="{{currentCharacter.appeal}}" increment='increment("appeal")' decrement='decrement("appeal")'></spinner-widget>
+                  </div>    
+                </div> <!-- end new spinner row -->
                 <div class="form-group">
                   <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok-circle"></span> Save</button> <button type="button" class="btn btn-primary" ng-click="deleteCharacter(currentCharacter.id)" ng-show="currentCharacter.id"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
                 </div>    

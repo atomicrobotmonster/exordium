@@ -49,7 +49,7 @@
                   </div>    
                 </div> <!-- end new spinner row -->
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok-circle"></span> Save</button> <button type="button" class="btn btn-primary" ng-click="deleteCharacter(currentCharacter.id)" ng-show="currentCharacter.id"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
+                  <button type="submit" class="btn btn-primary" ng-disabled='!showNewCharacterLink && !characterForm.$dirty'><span class="glyphicon glyphicon-ok-circle"></span> Save</button> <button type="button" class="btn btn-primary" ng-click="deleteCharacter(currentCharacter.id)" ng-show="currentCharacter.id"><span class="glyphicon glyphicon-remove-circle"></span> Delete</button>
                 </div>    
               </form>              
             </div>

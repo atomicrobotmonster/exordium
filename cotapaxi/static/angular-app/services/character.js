@@ -22,7 +22,9 @@ angular.module('cotopaxiApp').factory('Character', function($resource) {
     if (this.unassigned_attribute_points > 0) {
 	  this.unassigned_attribute_points--
 	  this[attribute]++
-    }	
+    }
+
+    return this[attribute]
   }
 
   Character.prototype.decrementAttribute = function(attribute) {
@@ -30,6 +32,8 @@ angular.module('cotopaxiApp').factory('Character', function($resource) {
 	  this.unassigned_attribute_points++
 	  this[attribute]--
     }	
+
+    return this[attribute]
   }
 
   return Character 

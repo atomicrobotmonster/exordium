@@ -44,7 +44,7 @@ cotopaxiApp.config(['$routeProvider', '$httpProvider',
 
 cotopaxiApp.run(function($rootScope, $location, UserAuthService) {
 
-  UserAuthService.loadStoredCredentials()
+  $rootScope.authenticated = UserAuthService.loadStoredCredentials()
 
   $rootScope.$on('$routeChangeStart', function(event, next, current) {
 

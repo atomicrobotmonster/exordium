@@ -6,6 +6,7 @@ angular.module('cotopaxiApp').controller('LoginController', function ($http, $lo
     if (error.status == 401) {    
       $scope.badCredentials = true
       $scope.authentication.password = ''
+      $rootScope.authenticated = false
     } else {
       console.log("The API returned an error: status [" + error.status + "] statusText [" + error.statusText + "]")
     }
@@ -15,11 +16,10 @@ angular.module('cotopaxiApp').controller('LoginController', function ($http, $lo
     UserAuthService.registerCredentials($scope.authentication.username, $scope.authentication.password)
 
     UserProfile.get(function(data) {
-      $rootScope.shared.authenticated = true
+      $rootScope.authenticated = true
       $location.path('/')
     }, handleHttpError)
   }
 
   $scope.badCredentials = false;
-  $rootScope.shared.authenticated = false
 })

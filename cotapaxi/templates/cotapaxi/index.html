@@ -35,16 +35,16 @@
         </div>
         <div class="collapse navbar-collapse" id="app-nav">
           <ul class="nav navbar-nav navbar-right">
-            <li ng-show="shared.authenticated" ng-class="{ active: isActive('/new-character') }">
+            <li ng-show="authenticated" ng-class="{ active: isActive('/new-character') }">
               <a href="#new-character"><span class="glyphicon glyphicon-plus"></span> New Character</a>
             </li>
-            <li ng-class="{ active: isActive('/sign-up') }" ng-hide="shared.authenticated">
+            <li ng-class="{ active: isActive('/sign-up') }" ng-hide="authenticated">
               <a href="#sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
             </li>
-            <li ng-class="{ active: isActive('/login') }"ng-hide="shared.authenticated">
+            <li ng-class="{ active: isActive('/login') }"ng-hide="authenticated">
               <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
             </li>
-            <li ng-show="shared.authenticated">
+            <li ng-show="authenticated">
               <a href="#logout" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
             </li>
           </ul>

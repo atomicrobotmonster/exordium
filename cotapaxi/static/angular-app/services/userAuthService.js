@@ -15,6 +15,9 @@ angular.module('cotopaxiApp').service('UserAuthService', function($window) {
   service.loadStoredCredentials = function() {
     if ($window.sessionStorage['userCredentials']) {
       credentials = JSON.parse($window.sessionStorage['userCredentials'])
+      return true
+    } else {
+      return false
     }
   }
 

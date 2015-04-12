@@ -18,8 +18,8 @@ angular.module('cotopaxiApp').controller('RegistrationController', function ($ht
     $scope.registration.$save(function(data) {
       UserAuthService.registerCredentials(username, password)
       
-      $rootScope.shared.userProfile = UserProfile.get(function(data) {
-        $rootScope.shared.authenticated = true
+      UserProfile.get(function(data) {
+        $rootScope.authenticated = true
         $location.path('/')        
       })
     })

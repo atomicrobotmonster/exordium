@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('cotopaxiApp').controller('CharacterEditorController', function ($http, $location, $routeParams, $rootScope, $scope, currentUserProfile, Character) {
+angular.module('cotopaxiApp').controller('CharacterEditorController', function ($http, $location, $routeParams, $rootScope, $scope, currentUserProfile, Character, CharacterEditorDirtyChecker) {
   $scope.isActive = function (viewLocation) {
     var active = (viewLocation === $location.path());
     return active;
@@ -28,12 +28,14 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     }
 
     $scope.currentCharacter.$update(function(data) {
+      $scope.characterForm.$setPristine()
       $location.path("/character/" + $scope.currentCharacter.id)
     })
   }
 
   $scope.deleteCharacter = function(id) {
     $scope.currentCharacter.$remove({id: id}, function(data) {
+      $scope.characterForm.$setPristine()
       $location.path("/character")
     })
   }
@@ -50,8 +52,10 @@ angular.module('cotopaxiApp').controller('CharacterEditorController', function (
     $scope.currentCharacter.decrementAttribute(attributeName)
   }
 
-
   if (currentUserProfile) {  
+    //register our form with the dirty checker
+    CharacterEditorDirtyChecker.registerCharacterForm($scope)
+
     $scope.characters = currentUserProfile.characters
     $scope.showNewCharacterLink = false
 

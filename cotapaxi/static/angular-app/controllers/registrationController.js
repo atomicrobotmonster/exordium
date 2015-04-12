@@ -7,7 +7,7 @@ angular.module('cotopaxiApp').controller('RegistrationController', function ($ht
       $scope.badCredentials = true
       $scope.authentication.password = ''
     } else {
-      console.log("The API returned an error: status [" + error.status + "] statusText [" + error.statusText + "]")
+      console.log('The API returned an error: status [' + error.status + '] statusText [' + error.statusText + '].')
     }
   }
 

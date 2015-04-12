@@ -16,7 +16,7 @@
                   <li ng-repeat="character in characters | orderBy:'name'" ng-class="{ selected: isEditing(character.id) }"><a href="" ng-href="#/character/{{character.id}}">{{character.name}} <span class="glyphicon glyphicon-chevron-right pull-right" ng-show="isEditing(character.id)"></span></a></li>
                 </ul>
               </nav> <!-- end #character-selector-->
-              <form id="character-editor" class="col-sm-9" ng-submit="saveCharacter()">
+              <form id="character-editor" name="characterForm" class="col-sm-9" ng-submit="saveCharacter()">
                 <input type="hidden" ng-model="currentCharacter.id">
                 <div class="form-group">
                   <label for="name" class="control-label">Name</label>

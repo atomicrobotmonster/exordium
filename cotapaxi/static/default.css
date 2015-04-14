@@ -188,6 +188,7 @@ div.character-editor-dirty-message {
 div.character-editor-dirty-buttons {
     background-color: rgba(40,30,20,0.6);
     margin: 0;
+    overflow: auto; 
 }
 
 div.character-editor-dirty-message p {

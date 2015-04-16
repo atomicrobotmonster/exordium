@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('cotopaxiApp').service('APIAuthInterceptor', function($rootScope, UserAuthService) {
   var service = this;

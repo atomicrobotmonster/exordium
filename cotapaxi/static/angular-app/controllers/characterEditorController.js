@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('cotopaxiApp').controller('CharacterEditorController', function ($http, $location, $routeParams, $rootScope, $scope, currentUserProfile, Character, CharacterEditorDirtyChecker) {
   $scope.isActive = function (viewLocation) {

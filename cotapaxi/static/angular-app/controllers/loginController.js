@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('cotopaxiApp').controller('LoginController', function ($http, $location, $rootScope, $scope, UserProfile, UserAuthService) {
 

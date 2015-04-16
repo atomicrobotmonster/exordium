@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 cotopaxiApp.factory('CharacterEditorDirtyChecker', function($rootScope, $window, $modal) { 
 

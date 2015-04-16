@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('cotopaxiApp').factory('Character', function($resource) {
   var Character = $resource('http://localhost:8000/api/character/:id', null, {

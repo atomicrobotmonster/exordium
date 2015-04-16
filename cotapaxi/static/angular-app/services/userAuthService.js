@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('cotopaxiApp').service('UserAuthService', function($window) {
   var service = this;  

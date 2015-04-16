@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var appController = angular.module('cotopaxiApp').controller('AppController', function ($http, $location, $rootScope, $scope, UserAuthService, UserProfile) {
   $scope.isActive = function (viewLocation) {

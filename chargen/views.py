@@ -1,15 +1,11 @@
 from rest_framework import permissions
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import generics, viewsets, status
-from django.db import transaction, IntegrityError
+from django.db import transaction
 from models import UserProfile, Character
-from serializers import UserProfileSerializer, UserProfileUpsertSerializer, CharacterSummarySerializer, CharacterSerializer
+from serializers import UserProfileSerializer, UserProfileUpsertSerializer, CharacterSerializer
 import logging
-
-print 'logger: ' + __name__
 
 logger = logging.getLogger(__name__)
 

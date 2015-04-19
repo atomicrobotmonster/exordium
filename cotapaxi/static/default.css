@@ -62,7 +62,7 @@ form .bg-danger {
 input.spinner-field {
 	width: 90%;
 	max-width: 160px;
-	min-width: 85px;
+	min-width: 40px;
 	
 	height: 157%;
 	min-height: 157px;
@@ -87,7 +87,7 @@ label.spinner-label {
 
 .spinner-widget {
 	width: 90%;
-	min-width: 85px;
+	min-width: 40px;
 	max-width: 160px;
 	
 	height: 156px;

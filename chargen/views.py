@@ -87,7 +87,7 @@ class UserProfileDetailView(generics.RetrieveAPIView):
     authentication_classes = (QuietBasicAuthentication, )
     permission_classes = (IsAuthenticated, IsUserForUserProfile, )
     serializer_class = UserProfileSerializer
-    queryset = UserProfile.objects.all()
+    queryset = UserProfile.objects.select_related('user').all()
     lookup_field = 'id'
 
 

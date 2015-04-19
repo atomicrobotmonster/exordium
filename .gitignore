@@ -56,3 +56,6 @@ target/
 
 # OSX Stuff
 .DS_Store
+
+# PyCharm
+.idea

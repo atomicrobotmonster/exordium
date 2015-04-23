@@ -22,7 +22,7 @@ Angular cleanup:
 
 * overflow: scroll on character selector
 * handle HTTP errors
-* grunt based build
+* dependency management using bower
 
 API improvements:
 

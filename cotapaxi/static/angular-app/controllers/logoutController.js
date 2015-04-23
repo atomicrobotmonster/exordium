@@ -1,11 +1,15 @@
-'use strict';
+var appController;
 
-var appController = angular.module('cotopaxiApp').controller('LogoutController', function ($location, $rootScope, $scope, UserAuthService) {
-  console.log('Logging out ' + UserAuthService.getUserCredentials().username + '.')
+(function() {
+	'use strict';
 
-  $rootScope.authenticated = false
-  
-  UserAuthService.clearCredentials()
+	appController = angular.module('cotopaxiApp').controller('LogoutController', function ($location, $rootScope, $scope, UserAuthService) {
+	  console.log('Logging out ' + UserAuthService.getUserCredentials().username + '.');
 
-  $location.url('')
-})
+	  $rootScope.authenticated = false;
+	  
+	  UserAuthService.clearCredentials();
+
+	  $location.url('');
+	});
+}());
